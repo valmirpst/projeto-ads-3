@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS Site</title>
+    <title>Admin | CMS</title>
 </head>
 
 <body>
     <header>
-        <h1>Meu Site</h1>
+        <h1>Admin</h1>
     </header>
 
     <main>
@@ -17,10 +17,10 @@
     </main>
 
     <footer>
-        <a href="<?php echo baseUrl('admin'); ?>">Admin</a>
+        <a href="<?php echo baseUrl(); ?>">Home</a>
     </footer>
 
-    <script type="module" src="<?php echo baseUrl('assets/js/pages/home.js'); ?>"></script>
+    <script type="module" src="<?php echo baseUrl('assets/js/pages/admin.js'); ?>"></script>
 </body>
 
 </html>
