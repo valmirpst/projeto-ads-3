@@ -1,0 +1,41 @@
+CREATE TABLE users (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE settings (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    site_name VARCHAR(150) NOT NULL,
+    site_description TEXT,
+    logo_image VARCHAR(500),
+    favicon_image VARCHAR(500),
+    contact_email VARCHAR(255),
+    phone VARCHAR(30),
+    instagram VARCHAR(255),
+    facebook VARCHAR(255),
+    linkedin VARCHAR(255),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE sections (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(50) NOT NULL,
+    position INT UNSIGNED NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    config JSON NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    UNIQUE KEY uq_section_position (position)
+);
+
+INSERT INTO users (name, email, password) VALUES
+('Admin', 'admin@test.com', '$2y$10$9yqIX9ZiuocYyHSZI9Xa..5VnHW.8juGkaCjY1OUz55xwhV0jObGy'); -- senha: 123
