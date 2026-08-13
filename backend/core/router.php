@@ -30,6 +30,12 @@ function handleWebRequest(string $uri)
         exit;
     }
 
+    // Se a rota for /admin/login e o usuário já estiver logado, redireciona para o dashboard
+    if ($uri === '/admin/login' && isset($_SESSION['user_id'])) {
+        header('Location: ' . baseUrl('admin'));
+        exit;
+    }
+
     switch ($uri) {
         case '/':
         case '/home':
