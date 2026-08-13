@@ -51,6 +51,9 @@ function handleWebRequest(string $uri)
             session_destroy();
             header('Location: ' . baseUrl('admin/login'));
             exit;
+        case '/admin/sections':
+            require_once __DIR__ . '/../../views/admin/sections.php';
+            break;
         default:
             http_response_code(404);
             echo 'Página não encontrada';
