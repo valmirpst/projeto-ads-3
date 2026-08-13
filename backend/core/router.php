@@ -12,11 +12,8 @@ function handleRequest(string $uri)
 function handleApiRequest(string $uri)
 {
     switch ($uri) {
-        case '/api/sections':
-            require_once __DIR__ . '/../api/sections.php';
-            break;
-        case '/api/auth':
-            require_once __DIR__ . '/../api/auth.php';
+        case '/api/auth/login':
+            require_once __DIR__ . '/../api/auth/login.php';
             break;
         default:
             http_response_code(404);
@@ -27,6 +24,12 @@ function handleApiRequest(string $uri)
 
 function handleWebRequest(string $uri)
 {
+    // Qualquer rota /admin/* exige login, exceto a própria tela de login
+    if (strpos($uri, '/admin') === 0 && $uri !== '/admin/login' && !(isset($_SESSION['user_id']))) {
+        header('Location: ' . baseUrl('admin/login'));
+        exit;
+    }
+
     switch ($uri) {
         case '/':
         case '/home':
@@ -35,9 +38,13 @@ function handleWebRequest(string $uri)
         case '/admin':
             require_once __DIR__ . '/../../views/admin/dashboard.php';
             break;
-        case '/admin/sections':
-            require_once __DIR__ . '/../../views/admin/sections.php';
+        case '/admin/login':
+            require_once __DIR__ . '/../../views/admin/login.php';
             break;
+        case '/admin/logout':
+            session_destroy();
+            header('Location: ' . baseUrl('admin/login'));
+            exit;
         default:
             http_response_code(404);
             echo 'Página não encontrada';

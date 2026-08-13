@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -9,17 +9,9 @@
 </head>
 
 <body>
-    <header>
-        <h1>Admin</h1>
-    </header>
-
     <main>
         <?php echo $content ?? ''; ?>
     </main>
-
-    <footer>
-        <a href="<?php echo baseUrl(); ?>">Home</a>
-    </footer>
 
     <?php if (!empty($script)): ?>
         <script type="module" src="<?php echo baseUrl("assets/js/{$script}"); ?>"></script>
