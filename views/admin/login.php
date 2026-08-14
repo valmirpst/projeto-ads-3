@@ -1,13 +1,27 @@
 <?php ob_start(); ?>
 
-<h1>Login</h1>
+<div class="card card shadow-sm m-auto w-100" style="max-width: 400px;">
+    <div class="card-header bg-body py-3">
+        <a href="<?php echo baseUrl(); ?>" class="link-secondary"></a>
+        <h1 class="card-title h3">Login</h1>
+        <p class="card-subtitle text-muted">Sign in to your account</p>
+    </div>
 
-<form id="login-form">
-    <input type="email" id="email" placeholder="E-mail" required>
-    <input type="password" id="password" placeholder="Senha" required>
-    <p id="error-msg" style="display:none; color:red;"></p>
-    <button type="submit">Entrar</button>
-</form>
+    <div class="card-body">
+        <form id="login-form" class="d-flex flex-column gap-3 py-2">
+            <label for="email" class="d-flex flex-column gap-1">
+                <span>Email</span>
+                <input type="email" id="email" placeholder="Enter your email" required class="form-control">
+            </label>
+            <label for="password" class="d-flex flex-column gap-1">
+                <span>Password</span>
+                <input type="password" id="password" placeholder="Enter your password" required class="form-control">
+            </label>
+            <p id="error-msg" class="text-danger d-none"></p>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
 
 <?php
 $title   = 'Login';
