@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', '0');
 
-require_once __DIR__ . '/../../core/database.php';
+require_once __DIR__ . '/../../models/User.php';
 require_once __DIR__ . '/../../core/functions.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -19,10 +19,8 @@ if (!$email || !$password) {
 }
 
 try {
-  $db   = getDbConnection();
-  $stmt = $db->prepare("SELECT id, password FROM users WHERE email = ?");
-  $stmt->execute([$email]);
-  $user = $stmt->fetch();
+  $userModel = new User();
+  $user = $userModel->findByEmail($email);
 
   if ($user && password_verify($password, $user['password'])) {
     $_SESSION['user_id'] = $user['id'];
