@@ -13,6 +13,7 @@
         <h1>Admin</h1>
         <a href="<?php echo baseUrl("admin"); ?>">Dashboard</a>
         <a href="<?php echo baseUrl("admin/sections"); ?>">Sections</a>
+        <a href="<?php echo baseUrl("admin/logout"); ?>">Logout</a>
         <a href="<?php echo baseUrl(); ?>">Back to Home</a>
     </header>
 
