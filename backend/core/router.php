@@ -15,6 +15,9 @@ function handleApiRequest(string $uri)
         case '/api/auth/login':
             require_once __DIR__ . '/../api/auth/login.php';
             break;
+        case '/api/settings':
+            require_once __DIR__ . '/../api/settings.php';
+            break;
         default:
             http_response_code(404);
             echo json_encode(['error' => 'Endpoint não encontrado']);

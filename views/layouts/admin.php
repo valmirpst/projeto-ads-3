@@ -17,8 +17,8 @@
             <nav class="nav">
                 <a class="nav-link text-white" href="<?php echo baseUrl("admin"); ?>">Dashboard</a>
                 <a class="nav-link text-white" href="<?php echo baseUrl("admin/sections"); ?>">Sections</a>
-                <a class="nav-link text-danger" href="<?php echo baseUrl("admin/logout"); ?>">Logout</a>
                 <a class="nav-link text-white-50" href="<?php echo baseUrl(); ?>">Back to Home</a>
+                <a class="nav-link text-danger" href="<?php echo baseUrl("admin/logout"); ?>">Logout</a>
             </nav>
         </div>
     </header>
