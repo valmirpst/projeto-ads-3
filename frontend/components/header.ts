@@ -10,6 +10,7 @@ async function renderSettings() {
 
   if (elSiteName) elSiteName.textContent = settings.site_name || "Sem Nome";
   if (elSiteLogo) elSiteLogo.src = settings.logo_image || "assets/images/no-image.jpg";
+  if (settings.favicon_image) document.querySelector('link[rel="icon"]')?.setAttribute("href", settings.favicon_image);
 }
 
 async function main() {
@@ -17,5 +18,5 @@ async function main() {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  main();
+  await main();
 });

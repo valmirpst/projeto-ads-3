@@ -14,7 +14,7 @@ switch ($method) {
     if ($settings) {
       jsonResponse($settings);
     } else {
-      jsonResponse(['error' => 'Configurações não encontradas'], 404);
+      jsonResponse(['error' => 'Settings not found'], 404);
     }
     break;
 }
