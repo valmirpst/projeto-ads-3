@@ -11,11 +11,7 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <header class="bg-primary text-white py-3 mb-4 shadow-sm">
-        <div class="container">
-            <h1 class="h3 mb-0">Meu Site</h1>
-        </div>
-    </header>
+    <?php require_once __DIR__ . '/../components/header.php'; ?>
 
     <main class="container flex-grow-1 mb-5">
         <?php echo $content ?? ''; ?>

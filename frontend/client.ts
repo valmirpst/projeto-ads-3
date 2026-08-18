@@ -17,8 +17,8 @@ export async function get(
     const data = await response.json();
     return { data, error: null, status: response.status };
   } catch (error) {
-    console.error("Erro na requisição GET:", error);
-    return { data: null, error: error instanceof Error ? error.message : "Erro desconhecido", status: 500 };
+    console.error("Error in GET request:", error);
+    return { data: null, error: error instanceof Error ? error.message : "Unknown error", status: 500 };
   }
 }
 
