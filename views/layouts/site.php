@@ -14,7 +14,7 @@
 <body class="d-flex flex-column min-vh-100">
     <?php require_once __DIR__ . '/../components/header.php'; ?>
 
-    <main class="container flex-grow-1 mb-5">
+    <main class="flex-grow-1 mb-5 d-flex flex-column">
         <?php echo $content ?? ''; ?>
     </main>
 

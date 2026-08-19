@@ -18,7 +18,7 @@
           <?php if (isset($_SESSION['user_id'])): ?>
             <a class="nav-link" href="<?php echo baseUrl('admin'); ?>">Dashboard</a>
           <?php else: ?>
-            <a class="nav-link" href="<?php echo baseUrl('login'); ?>">Login</a>
+            <a class="nav-link" href="<?php echo baseUrl('admin/login'); ?>">Login</a>
           <?php endif; ?>
         </li>
       </ul>
