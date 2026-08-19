@@ -20,6 +20,11 @@ export function renderHeroSection(config: HeroConfig): HTMLElement {
   }
 
   container.style.padding = "4rem 2rem";
+  container.style.display = "flex";
+  container.style.flexDirection = "column";
+  container.style.justifyContent = "center";
+  container.style.alignItems = "center";
+  container.style.minHeight = "80vh";
   container.style.textAlign = "center";
   container.style.color = config.textColor || "#000";
 
@@ -27,6 +32,7 @@ export function renderHeroSection(config: HeroConfig): HTMLElement {
   title.textContent = config.title || "Default Hero Title";
   title.style.fontSize = "4rem";
   title.style.marginBottom = "1rem";
+  title.style.maxWidth = "800px";
   container.appendChild(title);
 
   if (config.subtitle) {
@@ -34,6 +40,7 @@ export function renderHeroSection(config: HeroConfig): HTMLElement {
     subtitle.textContent = config.subtitle;
     subtitle.style.fontSize = "1.5rem";
     subtitle.style.marginBottom = "2rem";
+    subtitle.style.maxWidth = "800px";
     container.appendChild(subtitle);
   }
 
