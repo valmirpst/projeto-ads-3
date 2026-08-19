@@ -1,4 +1,22 @@
 import { settingsService } from "../services/settings-service.js";
+import { sectionsService } from "../services/sections-service.js";
+import { renderSection } from "../components/sections/SectionRenderer.js";
+
+async function renderSections() {
+  const { data: sections } = await sectionsService.fetchSections();
+  const container = document.getElementById("sections-container");
+
+  if (!sections || !container) return;
+
+  container.innerHTML = "";
+
+  for (const section of sections) {
+    const sectionElement = renderSection(section);
+    if (sectionElement) {
+      container.appendChild(sectionElement);
+    }
+  }
+}
 
 async function renderSettings() {
   const { data: settings } = await settingsService.fetchSettings();
@@ -37,7 +55,8 @@ async function renderSettings() {
 }
 
 async function main() {
-  await renderSettings();
+  // Execute calls in parallel
+  await Promise.all([renderSections(), renderSettings()]);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
