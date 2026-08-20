@@ -22,6 +22,7 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row gap-3">
                     <li class="nav-item px-2"><a class="nav-link" href="<?php echo baseUrl("admin"); ?>">Dashboard</a></li>
                     <li class="nav-item px-2"><a class="nav-link" href="<?php echo baseUrl("admin/sections"); ?>">Sections</a></li>
+                    <li class="nav-item px-2"><a class="nav-link" href="<?php echo baseUrl("admin/settings"); ?>">Settings</a></li>
                     <li class="nav-item ps-4 border-start"><a class="nav-link text-secondary" href="<?php echo baseUrl(); ?>">Back to Home</a></li>
                     <li class="nav-item px-2"><a class="nav-link text-danger" href="<?php echo baseUrl("admin/logout"); ?>">Logout</a></li>
                 </ul>

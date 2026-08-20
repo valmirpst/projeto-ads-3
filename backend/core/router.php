@@ -70,6 +70,9 @@ function handleWebRequest(string $uri)
         case '/admin/sections':
             require_once __DIR__ . '/../../views/admin/sections.php';
             break;
+        case '/admin/settings':
+            require_once __DIR__ . '/../../views/admin/settings.php';
+            break;
         default:
             http_response_code(404);
             echo 'Página não encontrada';
