@@ -6,5 +6,5 @@ node_modules/
 .vscode/
 
 public/uploads/*
-# public/assets/js/
+public/assets/js/
 
