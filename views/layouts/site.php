@@ -18,11 +18,7 @@
         <?php echo $content ?? ''; ?>
     </main>
 
-    <footer class="bg-dark text-white py-4 mt-auto">
-        <div class="container text-center">
-            <a class="text-white-50 text-decoration-none" href="<?php echo baseUrl('admin'); ?>">Admin</a>
-        </div>
-    </footer>
+    <?php require_once __DIR__ . '/../components/footer.php'; ?>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
