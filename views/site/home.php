@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
 
-<div id="sections-container" class="sections-container flex-grow-1"></div>
+<div id="sections-container" class="flex-grow-1"></div>
 
 <?php
 $title   = 'Home';

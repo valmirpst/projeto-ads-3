@@ -24,7 +24,7 @@ export function renderHeroSection(config: HeroConfig): HTMLElement {
   container.style.flexDirection = "column";
   container.style.justifyContent = "center";
   container.style.alignItems = "center";
-  container.style.minHeight = "80vh";
+  container.style.minHeight = "85vh";
   container.style.textAlign = "center";
   container.style.color = config.textColor || "#000";
 
