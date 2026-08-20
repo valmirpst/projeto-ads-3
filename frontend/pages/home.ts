@@ -21,9 +21,13 @@ async function renderSections() {
 async function renderSettings() {
   const { data: settings } = await settingsService.fetchSettings();
 
-  if (!settings) return;
-
-  const { site_name, site_description, contact_email, phone, instagram, facebook, linkedin } = settings;
+  const site_name = settings?.site_name;
+  const site_description = settings?.site_description;
+  const contact_email = settings?.contact_email;
+  const phone = settings?.phone;
+  const instagram = settings?.instagram;
+  const facebook = settings?.facebook;
+  const linkedin = settings?.linkedin;
 
   const elSiteName = document.getElementById("site-name");
   const elSiteDescription = document.getElementById("site-description");

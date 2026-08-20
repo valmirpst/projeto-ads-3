@@ -15,6 +15,11 @@ export async function get(
   try {
     const response = await fetch(buildUrl(path), options);
     const data = await response.json();
+
+    if (!response.ok) {
+      return { data: null, error: data.error || data.message || "Request failed", status: response.status };
+    }
+
     return { data, error: null, status: response.status };
   } catch (error) {
     console.error("Error in GET request:", error);
