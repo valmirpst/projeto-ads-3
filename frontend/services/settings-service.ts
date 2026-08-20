@@ -1,4 +1,4 @@
-import { get } from "../client.js";
+import { get, put } from "../client.js";
 
 export type Settings = {
   id: number;
@@ -20,6 +20,11 @@ async function fetchSettings() {
   return { ...res, data: res.data as Settings | null };
 }
 
+async function updateSettings(data: Partial<Settings>) {
+  return put("api/settings", data);
+}
+
 export const settingsService = {
   fetchSettings,
+  updateSettings,
 };
