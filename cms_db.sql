@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS settings;
+DROP TABLE IF EXISTS sections;
+DROP TABLE IF EXISTS media;
+
 CREATE TABLE users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -38,4 +43,4 @@ CREATE TABLE sections (
 );
 
 INSERT INTO users (name, email, password) VALUES
-('Admin', 'admin@test.com', '$2y$10$9yqIX9ZiuocYyHSZI9Xa..5VnHW.8juGkaCjY1OUz55xwhV0jObGy'); -- senha: 123
+('Admin', 'admin@test.com', '$2y$10$9yqIX9ZiuocYyHSZI9Xa..5VnHW.8juGkaCjY1OUz55xwhV0jObGy'); /* senha: 123 */
