@@ -1,9 +1,9 @@
 <?php ob_start(); ?>
 
 <div class="card card shadow-sm m-auto w-100" style="max-width: 400px;">
-    <div class="card-header bg-body py-3">
-        <a href="<?php echo baseUrl(); ?>" class="link-secondary"></a>
-        <h1 class="card-title h3">Login</h1>
+    <div class="card-header bg-body py-3 border-bottom-0">
+        <a href="<?php echo baseUrl(); ?>" class="link-secondary text-decoration-none small mb-2 d-inline-block">&larr; Back to Home</a>
+        <h1 class="card-title h3 mt-1">Login</h1>
         <p class="card-subtitle text-muted">Sign in to your account</p>
     </div>
 
@@ -17,7 +17,7 @@
                 <span>Password</span>
                 <input type="password" id="password" placeholder="Enter your password" required class="form-control">
             </label>
-            <p id="error-msg" class="text-danger d-none"></p>
+            <p id="error-msg" class="text-danger" style="display: none;"></p>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
