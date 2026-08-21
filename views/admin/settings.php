@@ -18,6 +18,16 @@
         </div>
 
         <div class="col-md-6">
+            <label for="logo_image" class="form-label fw-semibold">Logo Image</label>
+            <input type="file" class="form-control" id="logo_image" accept="image/*">
+        </div>
+
+        <div class="col-md-6">
+            <label for="favicon_image" class="form-label fw-semibold">Favicon Image</label>
+            <input type="file" class="form-control" id="favicon_image" accept="image/*">
+        </div>
+
+        <div class="col-md-6">
             <label for="contact_email" class="form-label fw-semibold">Contact Email</label>
             <input type="email" class="form-control" id="contact_email" name="contact_email">
         </div>
