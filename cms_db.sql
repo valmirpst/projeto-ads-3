@@ -13,12 +13,22 @@ CREATE TABLE users (
         ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE media (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    file_name VARCHAR(255) NOT NULL,
+    file_path VARCHAR(500) NOT NULL,
+    file_type VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
+
 CREATE TABLE settings (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     site_name VARCHAR(150) NOT NULL,
     site_description TEXT,
-    logo_image VARCHAR(500),
-    favicon_image VARCHAR(500),
+    logo_media_id INT UNSIGNED,
+    favicon_media_id INT UNSIGNED,
     contact_email VARCHAR(255),
     phone VARCHAR(30),
     instagram VARCHAR(255),
@@ -26,7 +36,10 @@ CREATE TABLE settings (
     linkedin VARCHAR(255),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (logo_media_id) REFERENCES media(id) ON DELETE SET NULL,
+    FOREIGN KEY (favicon_media_id) REFERENCES media(id) ON DELETE SET NULL
 );
 
 CREATE TABLE sections (
