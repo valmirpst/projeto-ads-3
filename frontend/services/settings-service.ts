@@ -4,8 +4,10 @@ export type Settings = {
   id: number;
   site_name: string;
   site_description?: string;
-  logo_image?: string;
-  favicon_image?: string;
+  logo_media_id?: number;
+  favicon_media_id?: number;
+  logo_path?: string;
+  favicon_path?: string;
   contact_email?: string;
   phone?: string;
   instagram?: string;

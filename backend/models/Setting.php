@@ -6,7 +6,15 @@ class Setting extends Model
 {
     public function getSettings(): ?array
     {
-        $stmt = $this->db->query("SELECT * FROM settings ORDER BY id ASC LIMIT 1");
+        $stmt = $this->db->query("
+            SELECT s.*, 
+                   ml.file_path as logo_path, 
+                   mf.file_path as favicon_path 
+            FROM settings s 
+            LEFT JOIN media ml ON s.logo_media_id = ml.id
+            LEFT JOIN media mf ON s.favicon_media_id = mf.id
+            ORDER BY s.id ASC LIMIT 1
+        ");
         $result = $stmt->fetch();
 
         return $result ?: null;
@@ -22,7 +30,9 @@ class Setting extends Model
                 phone            = :phone,
                 instagram        = :instagram,
                 facebook         = :facebook,
-                linkedin         = :linkedin
+                linkedin         = :linkedin,
+                logo_media_id    = :logo_media_id,
+                favicon_media_id = :favicon_media_id
             WHERE id = 1
         ");
 
@@ -34,6 +44,8 @@ class Setting extends Model
             ':instagram'        => $data['instagram']        ?? null,
             ':facebook'         => $data['facebook']         ?? null,
             ':linkedin'         => $data['linkedin']         ?? null,
+            ':logo_media_id'    => !empty($data['logo_media_id']) ? $data['logo_media_id'] : null,
+            ':favicon_media_id' => !empty($data['favicon_media_id']) ? $data['favicon_media_id'] : null,
         ]);
     }
 }
