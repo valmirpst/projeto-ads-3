@@ -1,5 +1,7 @@
 DROP TRIGGER IF EXISTS trg_sections_positive_position;
 
+DROP VIEW IF EXISTS vw_sections_analytics;
+
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS settings;
 DROP TABLE IF EXISTS sections;
@@ -59,6 +61,35 @@ CREATE TABLE sections (
 
 INSERT INTO users (name, email, password) VALUES
 ('Admin', 'admin@test.com', '$2y$10$9yqIX9ZiuocYyHSZI9Xa..5VnHW.8juGkaCjY1OUz55xwhV0jObGy'); /* senha: 123 */
+
+CREATE OR REPLACE VIEW vw_sections_analytics AS
+WITH cleaned_sections AS (
+    SELECT
+        id,
+        LOWER(TRIM(type)) AS section_type,
+        position,
+        enabled,
+        NULLIF(TRIM(JSON_UNQUOTE(JSON_EXTRACT(config, '$.title'))), '') AS title,
+        NULLIF(TRIM(JSON_UNQUOTE(JSON_EXTRACT(config, '$.subtitle'))), '') AS subtitle,
+        NULLIF(TRIM(JSON_UNQUOTE(JSON_EXTRACT(config, '$.backgroundImage'))), '') AS background_image,
+        created_at,
+        updated_at
+    FROM sections
+)
+SELECT
+    id,
+    section_type,
+    position,
+    CASE
+        WHEN enabled = TRUE THEN 'enabled'
+        ELSE 'disabled'
+    END AS status,
+    title,
+    subtitle,
+    background_image,
+    created_at,
+    updated_at
+FROM cleaned_sections;
 
 DELIMITER //
 
