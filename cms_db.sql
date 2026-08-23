@@ -1,3 +1,5 @@
+DROP TRIGGER IF EXISTS trg_sections_positive_position;
+
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS settings;
 DROP TABLE IF EXISTS sections;
@@ -57,3 +59,17 @@ CREATE TABLE sections (
 
 INSERT INTO users (name, email, password) VALUES
 ('Admin', 'admin@test.com', '$2y$10$9yqIX9ZiuocYyHSZI9Xa..5VnHW.8juGkaCjY1OUz55xwhV0jObGy'); /* senha: 123 */
+
+DELIMITER //
+
+CREATE TRIGGER trg_sections_positive_position
+BEFORE UPDATE ON sections
+FOR EACH ROW
+BEGIN
+    IF NEW.position < 1 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'A posição da seção deve ser maior ou igual a 1.';
+    END IF;
+END//
+
+DELIMITER ;
