@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
 
-<h2>Admin Sections</h2>
+<h2>Sections</h2>
 
 <?php
 $title   = 'Sections Management';

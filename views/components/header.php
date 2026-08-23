@@ -10,19 +10,23 @@
     <div class="d-flex align-items-center gap-3">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row gap-3">
         <?php if (!empty($is_admin_layout)): ?>
-          <li class="nav-item px-2"><a class="nav-link" href="<?php echo baseUrl("admin"); ?>">Dashboard</a></li>
-          <li class="nav-item px-2"><a class="nav-link" href="<?php echo baseUrl("admin/sections"); ?>">Sections</a></li>
-          <li class="nav-item px-2"><a class="nav-link" href="<?php echo baseUrl("admin/settings"); ?>">Settings</a></li>
-          <li class="nav-item ps-4 border-start"><a class="nav-link text-secondary" href="<?php echo baseUrl(); ?>">Back to Home</a></li>
-          <li class="nav-item px-2"><a class="nav-link text-danger" href="<?php echo baseUrl("admin/logout"); ?>">Logout</a></li>
+          <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin"); ?>">Dashboard</a></li>
+          <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin/sections"); ?>">Sections</a></li>
+          <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin/settings"); ?>">Settings</a></li>
+          <li class="nav-item ps-3 ms-2 border-start d-flex align-items-center">
+            <a class="nav-link text-secondary" href="<?php echo baseUrl(); ?>">View Site</a>
+          </li>
+          <li class="nav-item px-2 d-flex align-items-center">
+            <a class="btn btn-outline-danger btn-sm" href="<?php echo baseUrl("admin/logout"); ?>">Logout</a>
+          </li>
         <?php else: ?>
-          <li class="nav-item px-2"><a class="nav-link" href="<?php echo baseUrl(''); ?>">Home</a></li>
-          <li class="nav-item px-2"><a class="nav-link" href="<?php echo baseUrl('blog'); ?>">Blog</a></li>
-          <li class="nav-item ps-4 border-start">
+          <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl(''); ?>">Home</a></li>
+          <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl('blog'); ?>">Blog</a></li>
+          <li class="nav-item ps-3 ms-2 border-start d-flex align-items-center">
             <?php if (isset($_SESSION['user_id'])): ?>
-              <a class="nav-link" href="<?php echo baseUrl('admin'); ?>">Dashboard</a>
+              <a class="btn btn-outline-primary btn-sm" href="<?php echo baseUrl('admin'); ?>">Dashboard</a>
             <?php else: ?>
-              <a class="nav-link" href="<?php echo baseUrl('admin/login'); ?>">Login</a>
+              <a class="btn btn-primary btn-sm" href="<?php echo baseUrl('admin/login'); ?>">Login</a>
             <?php endif; ?>
           </li>
         <?php endif; ?>
