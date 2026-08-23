@@ -20,11 +20,13 @@
         <div class="col-md-6">
             <label for="logo_image" class="form-label fw-semibold">Logo Image</label>
             <input type="file" class="form-control" id="logo_image" accept="image/*">
+            <input type="hidden" id="logo_media_id" name="logo_media_id">
         </div>
 
         <div class="col-md-6">
             <label for="favicon_image" class="form-label fw-semibold">Favicon Image</label>
             <input type="file" class="form-control" id="favicon_image" accept="image/*">
+            <input type="hidden" id="favicon_media_id" name="favicon_media_id">
         </div>
 
         <div class="col-md-6">
