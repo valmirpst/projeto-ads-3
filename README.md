@@ -1,4 +1,4 @@
-# Projeto CMS (Cafeteria)
+# Projeto CMS
 
 Um sistema de gerenciamento de conteúdo (CMS) desenvolvido com foco em simplicidade e iteratividade, sem o uso de frameworks pesados no backend.
 
