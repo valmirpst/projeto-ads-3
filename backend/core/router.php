@@ -22,6 +22,9 @@ function handleApiRequest(string $uri)
             case '/api/sections':
                 require_once __DIR__ . '/../api/sections.php';
                 break;
+            case '/api/analytics':
+                require_once __DIR__ . '/../api/analytics.php';
+                break;
             case '/api/upload':
                 require_once __DIR__ . '/../api/upload.php';
                 break;
