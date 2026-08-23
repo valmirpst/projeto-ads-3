@@ -8,6 +8,16 @@
     Welcome to your CMS! Choose a task below to get started.
 </div>
 
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow-sm border-0">
+            <div class="card-body" id="analytics-container">
+                <p class="text-muted mb-0">Carregando estatísticas...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row g-4">
     <!-- Card pra ir para as sectins -->
     <div class="col-md-6">
