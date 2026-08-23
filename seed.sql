@@ -1,5 +1,5 @@
 INSERT INTO settings (
-    site_name, site_description, logo_image, favicon_image, contact_email, phone, instagram, facebook, linkedin, created_at, updated_at
+    site_name, site_description, logo_media_id, favicon_media_id, contact_email, phone, instagram, facebook, linkedin, created_at, updated_at
 ) VALUES (
     'Dark Cafeteria',
     'A copy of a Cafeteria website made by Caio Aydrian.',
