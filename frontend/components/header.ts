@@ -7,8 +7,15 @@ async function renderSettings() {
   const elSiteLogo = document.getElementById("header_logo-image") as HTMLImageElement;
 
   if (elSiteName) elSiteName.textContent = settings?.site_name || "Sem Nome";
-  if (elSiteLogo) elSiteLogo.src = settings?.logo_image || "assets/images/no-image.jpg";
-  if (settings?.favicon_image) document.querySelector('link[rel="icon"]')?.setAttribute("href", settings.favicon_image);
+
+  if (settings?.logo_path && elSiteLogo) {
+    elSiteLogo.src = "/projetos/projeto-ads-3/public/" + settings.logo_path;
+  }
+
+  if (settings?.favicon_path) {
+    const elFavicon = document.querySelector('link[rel="icon"]');
+    elFavicon?.setAttribute("href", "/projetos/projeto-ads-3/public/" + settings.favicon_path);
+  }
 }
 
 async function main() {
