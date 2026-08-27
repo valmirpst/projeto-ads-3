@@ -13,15 +13,6 @@ function handleApiRequest(string $uri)
 {
     try {
         switch ($uri) {
-            case '/api/auth/login':
-                require_once __DIR__ . '/../api/auth/login.php';
-                break;
-            case '/api/settings':
-                require_once __DIR__ . '/../api/settings.php';
-                break;
-            case '/api/sections':
-                require_once __DIR__ . '/../api/sections.php';
-                break;
             case '/api/analytics':
                 require_once __DIR__ . '/../api/analytics.php';
                 break;
