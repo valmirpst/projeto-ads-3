@@ -26,10 +26,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'title' => $_POST['title'] ?? '',
                 'subtitle' => $_POST['subtitle'] ?? '',
                 'backgroundImage' => $_POST['backgroundImage'] ?? '',
-                'textColor' => '#ffffff',
-                'buttonColor' => '#0d6efd',
-                'buttonTextColor' => '#ffffff'
+                'textColor' => $_POST['textColor'] ?? '#ffffff'
             ];
+
+            if (!empty($_POST['buttonText'])) {
+                $config['buttonText'] = $_POST['buttonText'];
+                $config['buttonLink'] = $_POST['buttonLink'] ?? '#';
+                $config['buttonColor'] = $_POST['buttonColor'] ?? '#0d6efd';
+                $config['buttonTextColor'] = $_POST['buttonTextColor'] ?? '#ffffff';
+            }
         }
 
         $data = [
@@ -173,6 +178,11 @@ ob_start();
         document.getElementById('hero-title').value = '';
         document.getElementById('hero-subtitle').value = '';
         document.getElementById('hero-bg-image').value = '';
+        document.getElementById('hero-text-color').value = '#ffffff';
+        document.getElementById('hero-btn-text').value = '';
+        document.getElementById('hero-btn-link').value = '';
+        document.getElementById('hero-btn-color').value = '#0d6efd';
+        document.getElementById('hero-btn-text-color').value = '#ffffff';
         document.getElementById('sectionFormModalLabel').innerText = 'Create New Section';
     }
 
@@ -190,6 +200,11 @@ ob_start();
             document.getElementById('hero-title').value = config.title || '';
             document.getElementById('hero-subtitle').value = config.subtitle || '';
             document.getElementById('hero-bg-image').value = config.backgroundImage || '';
+            document.getElementById('hero-text-color').value = config.textColor || '#ffffff';
+            document.getElementById('hero-btn-text').value = config.buttonText || '';
+            document.getElementById('hero-btn-link').value = config.buttonLink || '';
+            document.getElementById('hero-btn-color').value = config.buttonColor || '#0d6efd';
+            document.getElementById('hero-btn-text-color').value = config.buttonTextColor || '#ffffff';
         }
 
         document.getElementById('sectionFormModalLabel').innerText = 'Edit Section';
