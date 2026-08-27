@@ -91,7 +91,7 @@ ob_start();
             <?php foreach ($sections as $section):
                 $config = json_decode($section['config'], true);
                 $badgeClass = $section['enabled'] ? "bg-success" : "bg-secondary";
-                $badgeText = $section['enabled'] ? "Ativo" : "Inativo";
+                $badgeText = $section['enabled'] ? "Active" : "Inactive";
                 $title = !empty($config['title']) ? $config['title'] : strtoupper($section['type']);
             ?>
                 <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
@@ -100,7 +100,7 @@ ob_start();
                         <small class="text-muted">Type: <?= htmlspecialchars($section['type']) ?> | Position: <?= htmlspecialchars($section['position']) ?></small>
                     </div>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-outline-primary" onclick='editSection(<?= json_encode($section) ?>)'>
+                        <button class="btn btn-sm btn-outline-primary" onclick='editSection(<?= htmlspecialchars(json_encode($section), ENT_QUOTES, "UTF-8") ?>)'>
                             <i class="bi bi-pencil"></i> Edit
                         </button>
                         <form method="POST" onsubmit="return confirm('Are you sure you want to delete this section?');">
@@ -146,7 +146,7 @@ ob_start();
 
                     <div class="form-check form-switch mb-3">
                         <input class="form-check-input" type="checkbox" role="switch" id="section-enabled" name="enabled" checked>
-                        <label class="form-check-label" for="section-enabled">Ativar Seção</label>
+                        <label class="form-check-label" for="section-enabled">Enable Section</label>
                     </div>
                 </div>
                 <div class="modal-footer">

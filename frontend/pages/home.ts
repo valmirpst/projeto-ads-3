@@ -5,13 +5,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       let sessionId = sessionStorage.getItem("cms_session");
       if (!sessionId) {
-        sessionId = "sess_" + Date.now() + Math.random().toString(36).substr(2, 9);
+        sessionId = "sess_" + Date.now() + Math.random().toString(36).substring(2, 11);
         sessionStorage.setItem("cms_session", sessionId);
       }
 
       await visitsService.trackVisit(sessionId, window.location.pathname);
     } catch (e) {
-      console.error("Erro ao registrar analytics:", e);
+      console.error("Error tracking analytics:", e);
     }
   }, 1000);
 });

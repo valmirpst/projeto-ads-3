@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../backend/models/Section.php';
 $sectionModel = new Section();
-$sections = $sectionModel->getAllOrdered();
+$sections = $sectionModel->getAllActive();
 
 ob_start();
 ?>

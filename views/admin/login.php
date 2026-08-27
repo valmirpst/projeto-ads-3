@@ -15,14 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: ' . baseUrl('admin'));
         exit;
     } else {
-        $error = 'Email ou senha inválidos.';
+        $error = 'Invalid email or password.';
     }
 }
 
 ob_start();
 ?>
 
-<div class="card card shadow-sm m-auto w-100" style="max-width: 400px;">
+<div class="card shadow-sm m-auto w-100" style="max-width: 400px;">
     <div class="card-header bg-body py-3 border-bottom-0">
         <a href="<?php echo baseUrl(); ?>" class="link-secondary text-decoration-none small mb-2 d-inline-block">&larr; Back to Home</a>
         <h1 class="card-title h3 mt-1">Login</h1>

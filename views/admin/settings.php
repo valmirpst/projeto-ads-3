@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . '/../../backend/models/Setting.php';
-require_once __DIR__ . '/../../backend/models/Media.php';
 $settingModel = new Setting();
-$mediaModel = new Media();
 $message = '';
 $error = '';
 
@@ -21,25 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     $uploadDir = __DIR__ . '/../../public/uploads/';
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0755, true);
-    }
 
-    if (isset($_FILES['logo_image']) && $_FILES['logo_image']['error'] === UPLOAD_ERR_OK) {
-        $file = $_FILES['logo_image'];
-        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $fileName = uniqid() . '-' . time() . '.' . $ext;
-        if (move_uploaded_file($file['tmp_name'], $uploadDir . $fileName)) {
-            $data['logo_media_id'] = $mediaModel->create($file['name'], 'uploads/' . $fileName, $file['type']);
+    if (isset($_FILES['logo_image'])) {
+        $mediaId = handleUpload($_FILES['logo_image'], $uploadDir);
+        if ($mediaId) {
+            $data['logo_media_id'] = $mediaId;
         }
     }
 
-    if (isset($_FILES['favicon_image']) && $_FILES['favicon_image']['error'] === UPLOAD_ERR_OK) {
-        $file = $_FILES['favicon_image'];
-        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $fileName = uniqid() . '-' . time() . '.' . $ext;
-        if (move_uploaded_file($file['tmp_name'], $uploadDir . $fileName)) {
-            $data['favicon_media_id'] = $mediaModel->create($file['name'], 'uploads/' . $fileName, $file['type']);
+    if (isset($_FILES['favicon_image'])) {
+        $mediaId = handleUpload($_FILES['favicon_image'], $uploadDir);
+        if ($mediaId) {
+            $data['favicon_media_id'] = $mediaId;
         }
     }
 
@@ -54,7 +45,7 @@ $settings = $settingModel->getSettings();
 ob_start();
 ?>
 
-<div class="">
+<div>
     <h2 class="mb-4">Settings</h2>
 
     <?php if ($message): ?>
@@ -80,7 +71,7 @@ ob_start();
             <input type="file" class="form-control" id="logo_image" name="logo_image" accept="image/*">
             <?php if (!empty($settings['logo_path'])): ?>
                 <div class="mt-2">
-                    <img src="<?= baseUrl($settings['logo_path']) ?>" alt="Logo" style="height: 40px; object-fit: contain;">
+                    <img src="<?= htmlspecialchars(baseUrl($settings['logo_path'])) ?>" alt="Logo" style="height: 40px; object-fit: contain;">
                 </div>
             <?php endif; ?>
         </div>
@@ -90,7 +81,7 @@ ob_start();
             <input type="file" class="form-control" id="favicon_image" name="favicon_image" accept="image/*">
             <?php if (!empty($settings['favicon_path'])): ?>
                 <div class="mt-2">
-                    <img src="<?= baseUrl($settings['favicon_path']) ?>" alt="Favicon" style="height: 40px; object-fit: contain;">
+                    <img src="<?= htmlspecialchars(baseUrl($settings['favicon_path'])) ?>" alt="Favicon" style="height: 40px; object-fit: contain;">
                 </div>
             <?php endif; ?>
         </div>

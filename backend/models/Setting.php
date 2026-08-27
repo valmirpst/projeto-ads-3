@@ -44,8 +44,8 @@ class Setting extends Model
             ':instagram'        => $data['instagram']        ?? null,
             ':facebook'         => $data['facebook']         ?? null,
             ':linkedin'         => $data['linkedin']         ?? null,
-            ':logo_media_id'    => !empty($data['logo_media_id']) ? $data['logo_media_id'] : null,
-            ':favicon_media_id' => !empty($data['favicon_media_id']) ? $data['favicon_media_id'] : null,
+            ':logo_media_id'    => $data['logo_media_id'] ?? null,
+            ':favicon_media_id' => $data['favicon_media_id'] ?? null,
         ]);
     }
 }

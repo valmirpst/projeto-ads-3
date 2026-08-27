@@ -16,7 +16,7 @@ class Visit extends Model
         ]);
     }
 
-    public function getRecentVisits($days = 30)
+    public function getRecentVisits(int $days = 30): array
     {
         $stmt = $this->db->prepare("
             SELECT session_id, page_url, created_at

@@ -2,8 +2,8 @@
       <div class="container-sm">
         <div class="row gy-3 align-items-center">
           <div class="col-md-6 text-center text-md-start">
-            <p class="mb-1 text-muted">&copy; <?php echo date('Y'); ?> CMS Project</p>
-            <small class="text-secondary">Todos os direitos reservados.</small>
+            <p class="mb-1 text-muted">&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars($globalSettings['site_name'] ?? 'CMS'); ?></p>
+            <small class="text-secondary">All rights reserved.</small>
           </div>
           <div class="col-md-6 text-center text-md-end">
             <ul class="list-inline mb-0">

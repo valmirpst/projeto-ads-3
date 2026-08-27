@@ -13,7 +13,7 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Text Color</label>
-        <input type="color" class="form-control form-control-color" id="hero-text-color" name="textColor" value="#ffffff">
+        <input type="color" class="form-control form-control-color" id="hero-text-color" name="textColor" value="#000000">
     </div>
 
     <hr>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-6 mb-3">
             <label class="form-label">Button Text Color</label>
-            <input type="color" class="form-control form-control-color" id="hero-btn-text-color" name="buttonTextColor" value="#000000">
+            <input type="color" class="form-control form-control-color" id="hero-btn-text-color" name="buttonTextColor" value="#ffffff">
         </div>
     </div>
 </div>

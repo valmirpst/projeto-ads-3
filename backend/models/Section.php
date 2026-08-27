@@ -4,7 +4,7 @@ require_once __DIR__ . '/Model.php';
 
 class Section extends Model
 {
-    public function getAllOrdered(): array
+    public function getAllActive(): array
     {
         $stmt = $this->db->query("SELECT * FROM sections WHERE enabled = TRUE ORDER BY position ASC");
         return $stmt->fetchAll();
@@ -25,9 +25,7 @@ class Section extends Model
 
     public function create(array $data): bool
     {
-        // Get max position
-        $stmt = $this->db->query("SELECT COALESCE(MAX(position), 0) as max_pos FROM sections");
-        $maxPos = $stmt->fetch()['max_pos'] ?? 0;
+        $maxPos = (int) $this->db->query("SELECT COALESCE(MAX(position), 0) FROM sections")->fetchColumn();
         $data['position'] = $maxPos + 1;
 
         $stmt = $this->db->prepare("INSERT INTO sections (type, position, enabled, config) VALUES (:type, :position, :enabled, :config)");

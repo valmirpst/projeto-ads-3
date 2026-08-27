@@ -1,16 +1,13 @@
 <?php
 require_once __DIR__ . '/../models/Visit.php';
+require_once __DIR__ . '/../core/functions.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
+$visitModel = new Visit();
 
 if ($method === 'GET') {
-    $visitModel = new Visit();
-    // Pega as visitas dos últimos 30 dias para a Dashboard
     $visits = $visitModel->getRecentVisits(30);
-
-    header('Content-Type: application/json');
-    echo json_encode($visits);
-    exit;
+    jsonResponse($visits);
 } elseif ($method === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
 
@@ -18,19 +15,11 @@ if ($method === 'GET') {
     $pageUrl = $data['page_url'] ?? '/';
 
     if ($sessionId) {
-        $visitModel = new Visit();
         $visitModel->logVisit($sessionId, $pageUrl);
-
-        header('Content-Type: application/json');
-        echo json_encode(['success' => true]);
-        exit;
+        jsonResponse(['success' => true]);
     } else {
-        http_response_code(400);
-        echo json_encode(['error' => 'session_id is required']);
-        exit;
+        jsonResponse(['error' => 'session_id is required'], 400);
     }
 } else {
-    http_response_code(405);
-    echo json_encode(['error' => 'Method Not Allowed']);
-    exit;
+    jsonResponse(['error' => 'Method Not Allowed'], 405);
 }

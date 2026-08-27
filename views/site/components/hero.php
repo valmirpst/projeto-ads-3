@@ -1,13 +1,13 @@
 <?php
 
 $backgroundImage = $config['backgroundImage'] ?? '';
-$textColor = $config['textColor'] ?? '#000';
+$textColor = $config['textColor'] ?? '#000000';
 $title = $config['title'] ?? 'Default Hero Title';
 $subtitle = $config['subtitle'] ?? '';
 $buttonText = $config['buttonText'] ?? '';
 $buttonLink = $config['buttonLink'] ?? '#';
-$buttonColor = $config['buttonColor'] ?? '#007bff';
-$buttonTextColor = $config['buttonTextColor'] ?? '#fff';
+$buttonColor = $config['buttonColor'] ?? '#0d6efd';
+$buttonTextColor = $config['buttonTextColor'] ?? '#ffffff';
 
 $bgStyle = $backgroundImage ? "background-image: url('" . baseUrl($backgroundImage) . "'); background-size: cover; background-position: center; background-repeat: no-repeat;" : "";
 ?>

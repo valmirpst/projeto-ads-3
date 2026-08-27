@@ -27,7 +27,7 @@ export async function get(
   }
 }
 
-export async function post(path: string, data: any) {
+export async function post(path: string, data: Record<string, unknown>) {
   const response = await fetch(buildUrl(path), {
     method: "POST",
     headers: { "Content-Type": "application/json" },

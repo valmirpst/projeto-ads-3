@@ -16,12 +16,9 @@ function handleApiRequest(string $uri)
             case '/api/analytics':
                 require_once __DIR__ . '/../api/analytics.php';
                 break;
-            case '/api/upload':
-                require_once __DIR__ . '/../api/upload.php';
-                break;
             default:
                 http_response_code(404);
-                echo json_encode(['error' => 'Endpoint não encontrado']);
+                echo json_encode(['error' => 'Endpoint not found']);
                 break;
         }
     } catch (Throwable $e) {
@@ -61,6 +58,7 @@ function handleWebRequest(string $uri)
             require_once __DIR__ . '/../../views/admin/login.php';
             break;
         case '/admin/logout':
+            $_SESSION = [];
             session_destroy();
             header('Location: ' . baseUrl('admin/login'));
             exit;
