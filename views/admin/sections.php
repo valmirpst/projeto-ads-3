@@ -3,27 +3,29 @@ require_once __DIR__ . '/../../backend/models/Section.php';
 
 $sectionModel = new Section();
 $message = '';
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
     if ($action === 'delete') {
         $id = (int)$_POST['id'];
-        $sectionModel->delete($id);
-        $message = "Section deleted successfully.";
+        if ($sectionModel->delete($id)) {
+            $message = "Section deleted successfully.";
+        } else {
+            $error = "Failed to delete section.";
+        }
     } elseif ($action === 'save') {
         $id = !empty($_POST['id']) ? (int)$_POST['id'] : null;
         $type = $_POST['type'] ?? '';
         $enabled = isset($_POST['enabled']) ? 1 : 0;
 
-        // Build config array based on type
         $config = [];
         if ($type === 'hero') {
             $config = [
                 'title' => $_POST['title'] ?? '',
                 'subtitle' => $_POST['subtitle'] ?? '',
                 'backgroundImage' => $_POST['backgroundImage'] ?? '',
-                // Keep colors hardcoded or from old config for simplicity, as we simplified the form
                 'textColor' => '#ffffff',
                 'buttonColor' => '#0d6efd',
                 'buttonTextColor' => '#ffffff'
@@ -37,11 +39,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
 
         if ($id) {
-            $sectionModel->update($id, $data);
-            $message = "Section updated successfully.";
+            if ($sectionModel->update($id, $data)) {
+                $message = "Section updated successfully.";
+            } else {
+                $error = "Failed to update section.";
+            }
         } else {
-            $sectionModel->create($data);
-            $message = "Section created successfully.";
+            if ($sectionModel->create($data)) {
+                $message = "Section created successfully.";
+            } else {
+                $error = "Failed to create section.";
+            }
         }
     }
 }
@@ -61,8 +69,10 @@ ob_start();
 <?php if ($message): ?>
     <div class="alert alert-success"><?= htmlspecialchars($message) ?></div>
 <?php endif; ?>
+<?php if (!empty($error)): ?>
+    <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+<?php endif; ?>
 
-<!-- Lista de sections  -->
 <div id="sections-list-container">
     <?php if (empty($sections)): ?>
         <div class="card shadow-sm border-0">
@@ -102,7 +112,6 @@ ob_start();
     <?php endif; ?>
 </div>
 
-<!-- Formulário (Criação e Edição) -->
 <div class="modal fade" id="sectionFormModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -114,10 +123,11 @@ ob_start();
                 <div class="modal-body">
                     <input type="hidden" name="action" value="save">
                     <input type="hidden" name="id" id="section-id">
+                    <input type="hidden" name="type" id="hidden-section-type">
 
                     <div class="mb-3">
                         <label class="form-label">Type</label>
-                        <select class="form-select" name="type" id="section-type" onchange="showFormTemplate(this.value)" required>
+                        <select class="form-select" id="section-type" onchange="document.getElementById('hidden-section-type').value = this.value; showFormTemplate(this.value)" required>
                             <option value="" disabled selected>Select a type...</option>
                             <option value="hero">Hero (Banner principal)</option>
                         </select>
@@ -155,11 +165,11 @@ ob_start();
     function resetForm() {
         document.getElementById('section-id').value = '';
         document.getElementById('section-type').value = '';
+        document.getElementById('hidden-section-type').value = '';
         document.getElementById('section-type').disabled = false;
         document.getElementById('section-enabled').checked = true;
         showFormTemplate('');
 
-        // Clear inputs in hero form
         document.getElementById('hero-title').value = '';
         document.getElementById('hero-subtitle').value = '';
         document.getElementById('hero-bg-image').value = '';
@@ -169,21 +179,8 @@ ob_start();
     function editSection(section) {
         document.getElementById('section-id').value = section.id;
         document.getElementById('section-type').value = section.type;
-
-        // Disable type selection when editing
-        const typeSelect = document.getElementById('section-type');
-        typeSelect.disabled = true;
-        // Create a hidden input to submit the type value since disabled selects don't submit
-        let hiddenType = document.getElementById('hidden-section-type');
-        if (!hiddenType) {
-            hiddenType = document.createElement('input');
-            hiddenType.type = 'hidden';
-            hiddenType.id = 'hidden-section-type';
-            hiddenType.name = 'type';
-            typeSelect.parentNode.appendChild(hiddenType);
-        }
-        hiddenType.value = section.type;
-
+        document.getElementById('hidden-section-type').value = section.type;
+        document.getElementById('section-type').disabled = true;
         document.getElementById('section-enabled').checked = section.enabled == 1;
 
         showFormTemplate(section.type);
@@ -203,7 +200,6 @@ ob_start();
 
 <?php
 $title   = 'Sections Management';
-// $script  = 'pages/admin/sections.js'; // REMOVED
 $content = ob_get_clean();
 require_once __DIR__ . '/../layouts/admin.php';
 ?>

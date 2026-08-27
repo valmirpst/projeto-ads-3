@@ -1,10 +1,13 @@
 <?php
 require_once __DIR__ . '/../../backend/models/Setting.php';
+require_once __DIR__ . '/../../backend/models/Media.php';
 $settingModel = new Setting();
+$mediaModel = new Media();
 $message = '';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $currentSettings = $settingModel->getSettings();
     $data = [
         'site_name' => $_POST['site_name'] ?? '',
         'site_description' => $_POST['site_description'] ?? '',
@@ -13,7 +16,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'instagram' => $_POST['instagram'] ?? '',
         'facebook' => $_POST['facebook'] ?? '',
         'linkedin' => $_POST['linkedin'] ?? '',
+        'logo_media_id' => $currentSettings['logo_media_id'] ?? null,
+        'favicon_media_id' => $currentSettings['favicon_media_id'] ?? null,
     ];
+
+    $uploadDir = __DIR__ . '/../../public/uploads/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    if (isset($_FILES['logo_image']) && $_FILES['logo_image']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['logo_image'];
+        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $fileName = uniqid() . '-' . time() . '.' . $ext;
+        if (move_uploaded_file($file['tmp_name'], $uploadDir . $fileName)) {
+            $data['logo_media_id'] = $mediaModel->create($file['name'], 'uploads/' . $fileName, $file['type']);
+        }
+    }
+
+    if (isset($_FILES['favicon_image']) && $_FILES['favicon_image']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['favicon_image'];
+        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $fileName = uniqid() . '-' . time() . '.' . $ext;
+        if (move_uploaded_file($file['tmp_name'], $uploadDir . $fileName)) {
+            $data['favicon_media_id'] = $mediaModel->create($file['name'], 'uploads/' . $fileName, $file['type']);
+        }
+    }
 
     if ($settingModel->updateSettings($data)) {
         $message = 'Settings updated successfully.';
@@ -36,7 +64,7 @@ ob_start();
         <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
-    <form method="POST" action="" class="row g-3" style="max-width: 680px;">
+    <form method="POST" action="" enctype="multipart/form-data" class="row g-3" style="max-width: 680px;">
         <div class="col-12">
             <label for="site_name" class="form-label fw-semibold">Site Name <span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="site_name" name="site_name" value="<?= htmlspecialchars($settings['site_name'] ?? '') ?>" required>
@@ -45,6 +73,26 @@ ob_start();
         <div class="col-12">
             <label for="site_description" class="form-label fw-semibold">Site Description</label>
             <textarea class="form-control" id="site_description" name="site_description" rows="3"><?= htmlspecialchars($settings['site_description'] ?? '') ?></textarea>
+        </div>
+
+        <div class="col-md-6">
+            <label for="logo_image" class="form-label fw-semibold">Logo Image</label>
+            <input type="file" class="form-control" id="logo_image" name="logo_image" accept="image/*">
+            <?php if (!empty($settings['logo_path'])): ?>
+                <div class="mt-2">
+                    <img src="<?= baseUrl($settings['logo_path']) ?>" alt="Logo" style="height: 40px; object-fit: contain;">
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="col-md-6">
+            <label for="favicon_image" class="form-label fw-semibold">Favicon Image</label>
+            <input type="file" class="form-control" id="favicon_image" name="favicon_image" accept="image/*">
+            <?php if (!empty($settings['favicon_path'])): ?>
+                <div class="mt-2">
+                    <img src="<?= baseUrl($settings['favicon_path']) ?>" alt="Favicon" style="height: 40px; object-fit: contain;">
+                </div>
+            <?php endif; ?>
         </div>
 
         <div class="col-md-6">

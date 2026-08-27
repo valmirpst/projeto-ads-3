@@ -19,7 +19,6 @@
 </div>
 
 <div class="row g-4">
-    <!-- Card pra ir para as sectins -->
     <div class="col-md-6">
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body d-flex flex-column">
@@ -32,7 +31,6 @@
         </div>
     </div>
 
-    <!-- card pra ir pras settings -->
     <div class="col-md-6">
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body d-flex flex-column">

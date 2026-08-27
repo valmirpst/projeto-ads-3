@@ -19,9 +19,10 @@ ob_start();
     <?php endforeach; ?>
 </div>
 
+<script type="module" src="<?php echo baseUrl('assets/js/pages/home.js'); ?>"></script>
+
 <?php
 $title   = 'Home';
-$script  = 'pages/home.js';
 $content = ob_get_clean();
 require_once __DIR__ . '/../layouts/site.php';
 ?>
