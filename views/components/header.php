@@ -1,9 +1,10 @@
 <header class="navbar-light bg-light">
   <nav class="navbar container-sm">
     <a class="navbar-brand d-flex align-items-center gap-3" href="<?php echo baseUrl(!empty($is_admin_layout) ? 'admin' : ''); ?>">
-      <img id="header_logo-image" src="<?php echo baseUrl('assets/images/no-image.jpg'); ?>" style="width: auto; height: 36px; object-fit: contain;" class="d-inline-block align-top" alt="Site Logo">
-      <span <?php echo empty($is_admin_layout) ? 'id="header_site-name"' : ''; ?> class="fs-4 lh-1">
-        <?php echo !empty($is_admin_layout) ? 'Admin' : 'Loading...'; ?>
+      <?php $logoUrl = !empty($globalSettings['logo_path']) ? baseUrl($globalSettings['logo_path']) : baseUrl('assets/images/no-image.jpg'); ?>
+      <img src="<?php echo $logoUrl; ?>" style="width: auto; height: 36px; object-fit: contain;" class="d-inline-block align-top" alt="Site Logo">
+      <span class="fs-4 lh-1">
+        <?php echo !empty($is_admin_layout) ? 'Admin' : htmlspecialchars($globalSettings['site_name'] ?? 'CMS'); ?>
       </span>
     </a>
 
