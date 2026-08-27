@@ -19,4 +19,12 @@ class Media extends Model
 
         return (int)$this->db->lastInsertId();
     }
+
+    public function getById(int $id): ?array
+    {
+        $stmt = $this->db->prepare("SELECT * FROM media WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        $result = $stmt->fetch();
+        return $result ?: null;
+    }
 }

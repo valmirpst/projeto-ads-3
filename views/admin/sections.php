@@ -22,10 +22,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $config = [];
         if ($type === 'hero') {
+            $backgroundImage = $_POST['currentBackgroundImage'] ?? '';
+
+            if (isset($_FILES['backgroundImage_file']) && $_FILES['backgroundImage_file']['error'] === UPLOAD_ERR_OK) {
+                require_once __DIR__ . '/../../backend/core/functions.php';
+                $uploadDir = __DIR__ . '/../../public/uploads/';
+                $mediaId = handleUpload($_FILES['backgroundImage_file'], $uploadDir);
+                if ($mediaId) {
+                    require_once __DIR__ . '/../../backend/models/Media.php';
+                    $mediaModel = new Media();
+                    $media = $mediaModel->getById($mediaId);
+                    if ($media) {
+                        $backgroundImage = $media['file_path'];
+                    }
+                }
+            }
+
             $config = [
                 'title' => $_POST['title'] ?? '',
                 'subtitle' => $_POST['subtitle'] ?? '',
-                'backgroundImage' => $_POST['backgroundImage'] ?? '',
+                'backgroundImage' => $backgroundImage,
                 'textColor' => $_POST['textColor'] ?? '#ffffff'
             ];
 
@@ -124,7 +140,7 @@ ob_start();
                 <h5 class="modal-title" id="sectionFormModalLabel">Section</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="">
+            <form method="POST" action="" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" name="action" value="save">
                     <input type="hidden" name="id" id="section-id">
@@ -177,7 +193,10 @@ ob_start();
 
         document.getElementById('hero-title').value = '';
         document.getElementById('hero-subtitle').value = '';
-        document.getElementById('hero-bg-image').value = '';
+        document.getElementById('hero-bg-image-file').value = '';
+        document.getElementById('hero-current-bg-image').value = '';
+        document.getElementById('hero-bg-image-preview').classList.add('d-none');
+        document.getElementById('hero-bg-image-preview').querySelector('img').src = '';
         document.getElementById('hero-text-color').value = '#ffffff';
         document.getElementById('hero-btn-text').value = '';
         document.getElementById('hero-btn-link').value = '';
@@ -199,7 +218,14 @@ ob_start();
             let config = typeof section.config === 'string' ? JSON.parse(section.config) : section.config;
             document.getElementById('hero-title').value = config.title || '';
             document.getElementById('hero-subtitle').value = config.subtitle || '';
-            document.getElementById('hero-bg-image').value = config.backgroundImage || '';
+            document.getElementById('hero-bg-image-file').value = '';
+            document.getElementById('hero-current-bg-image').value = config.backgroundImage || '';
+            if (config.backgroundImage) {
+                document.getElementById('hero-bg-image-preview').classList.remove('d-none');
+                document.getElementById('hero-bg-image-preview').querySelector('img').src = '<?= rtrim(baseUrl(), '/') ?>/' + config.backgroundImage;
+            } else {
+                document.getElementById('hero-bg-image-preview').classList.add('d-none');
+            }
             document.getElementById('hero-text-color').value = config.textColor || '#ffffff';
             document.getElementById('hero-btn-text').value = config.buttonText || '';
             document.getElementById('hero-btn-link').value = config.buttonLink || '';

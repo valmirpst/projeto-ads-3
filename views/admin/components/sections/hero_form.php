@@ -8,8 +8,12 @@
         <input type="text" class="form-control" id="hero-subtitle" name="subtitle">
     </div>
     <div class="mb-3">
-        <label class="form-label">Background Image URL</label>
-        <input type="text" class="form-control" id="hero-bg-image" name="backgroundImage" placeholder="Ex: uploads/hero.jpg">
+        <label class="form-label">Background Image</label>
+        <input type="file" class="form-control" id="hero-bg-image-file" name="backgroundImage_file" accept="image/*">
+        <input type="hidden" id="hero-current-bg-image" name="currentBackgroundImage">
+        <div id="hero-bg-image-preview" class="mt-2 d-none">
+            <img src="" alt="Background Image Preview" style="height: 100px; object-fit: contain;">
+        </div>
     </div>
     <div class="mb-3">
         <label class="form-label">Text Color</label>
