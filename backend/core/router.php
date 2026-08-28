@@ -53,6 +53,9 @@ function handleWebRequest(string $uri)
         case '/blog':
             require_once __DIR__ . '/../../views/site/blog.php';
             break;
+        case '/post':
+            require_once __DIR__ . '/../../views/site/post.php';
+            break;
         case '/admin':
             require_once __DIR__ . '/../../views/admin/dashboard.php';
             break;
