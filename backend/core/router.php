@@ -50,6 +50,9 @@ function handleWebRequest(string $uri)
         case '/home':
             require_once __DIR__ . '/../../views/site/home.php';
             break;
+        case '/blog':
+            require_once __DIR__ . '/../../views/site/blog.php';
+            break;
         case '/admin':
             require_once __DIR__ . '/../../views/admin/dashboard.php';
             break;
@@ -63,6 +66,9 @@ function handleWebRequest(string $uri)
             exit;
         case '/admin/media':
             require_once __DIR__ . '/../../views/admin/media.php';
+            break;
+        case '/admin/posts':
+            require_once __DIR__ . '/../../views/admin/posts.php';
             break;
         case '/admin/sections':
             require_once __DIR__ . '/../../views/admin/sections.php';

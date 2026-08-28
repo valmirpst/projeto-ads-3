@@ -12,6 +12,7 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex flex-row gap-3">
         <?php if (!empty($is_admin_layout)): ?>
           <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin"); ?>">Dashboard</a></li>
+          <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin/posts"); ?>">Posts</a></li>
           <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin/sections"); ?>">Sections</a></li>
           <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin/media"); ?>">Media</a></li>
           <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin/settings"); ?>">Settings</a></li>
