@@ -62,6 +62,9 @@ function handleWebRequest(string $uri)
             session_destroy();
             header('Location: ' . baseUrl('admin/login'));
             exit;
+        case '/admin/media':
+            require_once __DIR__ . '/../../views/admin/media.php';
+            break;
         case '/admin/sections':
             require_once __DIR__ . '/../../views/admin/sections.php';
             break;

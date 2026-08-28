@@ -12,7 +12,7 @@ $buttonTextColor = $config['buttonTextColor'] ?? '#ffffff';
 $bgStyle = $backgroundImage ? "background-image: url('" . baseUrl($backgroundImage) . "'); background-size: cover; background-position: center; background-repeat: no-repeat;" : "";
 ?>
 
-<section style="<?= $bgStyle ?> padding: 4rem 2rem; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 85vh; text-align: center; color: <?= htmlspecialchars($textColor) ?>;">
+<section style="<?= $bgStyle ?> padding: 4rem 2rem; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 87vh; text-align: center; color: <?= htmlspecialchars($textColor) ?>;">
     <h1 style="font-size: 4rem; margin-bottom: 1rem; max-width: 800px;">
         <?= htmlspecialchars($title) ?>
     </h1>

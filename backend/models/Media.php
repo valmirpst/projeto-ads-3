@@ -27,4 +27,16 @@ class Media extends Model
         $result = $stmt->fetch();
         return $result ?: null;
     }
+
+    public function getAll(): array
+    {
+        $stmt = $this->db->query("SELECT * FROM media ORDER BY created_at DESC");
+        return $stmt->fetchAll();
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->db->prepare("DELETE FROM media WHERE id = :id");
+        return $stmt->execute([':id' => $id]);
+    }
 }

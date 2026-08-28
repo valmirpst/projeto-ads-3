@@ -13,6 +13,7 @@
         <?php if (!empty($is_admin_layout)): ?>
           <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin"); ?>">Dashboard</a></li>
           <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin/sections"); ?>">Sections</a></li>
+          <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin/media"); ?>">Media</a></li>
           <li class="nav-item px-1"><a class="nav-link" href="<?php echo baseUrl("admin/settings"); ?>">Settings</a></li>
           <li class="nav-item ps-3 ms-2 border-start d-flex align-items-center">
             <a class="nav-link text-secondary" href="<?php echo baseUrl(); ?>">View Site</a>
