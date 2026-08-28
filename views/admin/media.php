@@ -16,12 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($media) {
             $filePath = __DIR__ . '/../../public/' . $media['file_path'];
 
-            // Tenta deletar o arquivo físico se existir
             if (file_exists($filePath)) {
                 unlink($filePath);
             }
 
-            // Deleta do banco
             if ($mediaModel->delete($id)) {
                 $message = "Mídia excluída com sucesso.";
             } else {

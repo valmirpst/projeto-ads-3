@@ -1,7 +1,6 @@
 <?php
 function handleRequest(string $uri)
 {
-    // Verifica se a URI começa com '/api' para determinar se é uma rota de API
     if (strpos($uri, '/api') === 0) {
         handleApiRequest($uri);
     } else {
