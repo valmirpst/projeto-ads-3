@@ -1,5 +1,6 @@
 DROP TRIGGER IF EXISTS trg_sections_positive_position;
 
+DROP PROCEDURE IF EXISTS sp_publish_post;
 DROP VIEW IF EXISTS vw_site_settings_full;
 DROP VIEW IF EXISTS vw_sections_analytics;
 
@@ -76,6 +77,7 @@ CREATE TABLE posts (
     content TEXT NOT NULL,
     cover_image VARCHAR(255) NULL,
     status ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
+    published_at TIMESTAMP NULL DEFAULT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -143,3 +145,14 @@ SELECT
 FROM settings s
 LEFT JOIN media m1 ON s.logo_media_id = m1.id
 LEFT JOIN media m2 ON s.favicon_media_id = m2.id;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_publish_post(IN p_post_id INT UNSIGNED)
+BEGIN
+    UPDATE posts
+    SET status = 'published', published_at = CURRENT_TIMESTAMP
+    WHERE id = p_post_id AND status = 'draft';
+END//
+
+DELIMITER ;
