@@ -7,13 +7,7 @@ class Setting extends Model
     public function getSettings(): ?array
     {
         $stmt = $this->db->query("
-            SELECT s.*, 
-                   ml.file_path as logo_path, 
-                   mf.file_path as favicon_path 
-            FROM settings s 
-            LEFT JOIN media ml ON s.logo_media_id = ml.id
-            LEFT JOIN media mf ON s.favicon_media_id = mf.id
-            ORDER BY s.id ASC LIMIT 1
+            SELECT * FROM vw_site_settings_full ORDER BY id ASC LIMIT 1
         ");
         $result = $stmt->fetch();
 

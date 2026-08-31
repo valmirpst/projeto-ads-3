@@ -1,5 +1,6 @@
 DROP TRIGGER IF EXISTS trg_sections_positive_position;
 
+DROP VIEW IF EXISTS vw_site_settings_full;
 DROP VIEW IF EXISTS vw_sections_analytics;
 
 DROP TABLE IF EXISTS visits;
@@ -124,3 +125,21 @@ BEGIN
 END//
 
 DELIMITER ;
+
+CREATE OR REPLACE VIEW vw_site_settings_full AS
+SELECT 
+    s.id,
+    s.site_name,
+    s.site_description,
+    s.contact_email,
+    s.phone,
+    s.instagram,
+    s.facebook,
+    s.linkedin,
+    m1.file_path AS logo_path,
+    m2.file_path AS favicon_path,
+    s.created_at,
+    s.updated_at
+FROM settings s
+LEFT JOIN media m1 ON s.logo_media_id = m1.id
+LEFT JOIN media m2 ON s.favicon_media_id = m2.id;
