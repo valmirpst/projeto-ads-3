@@ -81,7 +81,7 @@ function handleWebRequest(string $uri)
             break;
         default:
             http_response_code(404);
-            echo 'Página não encontrada';
+            echo 'Page not found';
             break;
     }
 }

@@ -15,7 +15,7 @@ $post = $postModel->getBySlug($slug);
 $isAdmin = isset($_SESSION['user_id']);
 if (!$post || ($post['status'] !== 'published' && !$isAdmin)) {
     http_response_code(404);
-    die('Post não encontrado.');
+    die('Post not found.');
 }
 
 ob_start();
@@ -33,7 +33,7 @@ ob_start();
 
             <?php if ($post['status'] !== 'published'): ?>
                 <div class="alert alert-warning mb-4">
-                    <i class="bi bi-exclamation-triangle"></i> Este post é um rascunho. Só você (Admin) pode vê-lo.
+                    <i class="bi bi-exclamation-triangle"></i> This post is a draft. Only you (Admin) can see it.
                 </div>
             <?php endif; ?>
 
@@ -41,7 +41,7 @@ ob_start();
                 <header class="mb-4">
                     <h1 class="display-4 fw-bold mb-3"><?= htmlspecialchars($post['title']) ?></h1>
                     <div class="text-muted mb-4">
-                        <i class="bi bi-calendar3"></i> Publicado em <?= date('d/m/Y \à\s H:i', strtotime($post['created_at'])) ?>
+                        <i class="bi bi-calendar3"></i> Published on <?= date('M d, Y \a\t H:i', strtotime($post['created_at'])) ?>
                     </div>
                 </header>
 
@@ -52,13 +52,13 @@ ob_start();
                 <?php endif; ?>
 
                 <section class="post-content lh-lg fs-5">
-                    <?= $post['content'] ?> <!-- Renderiza o HTML do conteúdo -->
+                    <?= $post['content'] ?>
                 </section>
             </article>
 
             <div class="mt-5 pt-4 border-top text-center">
                 <a href="<?= baseUrl('blog') ?>" class="btn btn-outline-secondary">
-                    <i class="bi bi-arrow-left"></i> Voltar para o Blog
+                    <i class="bi bi-arrow-left"></i> Back to Blog
                 </a>
             </div>
         </div>

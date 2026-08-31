@@ -12,9 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'delete') {
         $id = (int)$_POST['id'];
         if ($postModel->delete($id)) {
-            $message = "Post excluído com sucesso.";
+            $message = "Post deleted successfully.";
         } else {
-            $error = "Erro ao excluir o post.";
+            $error = "Failed to delete post.";
         }
     } elseif ($action === 'save') {
         $id = !empty($_POST['id']) ? (int)$_POST['id'] : null;
@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $status = $_POST['status'] ?? 'draft';
         $coverImage = $_POST['current_cover_image'] ?? null;
 
-        // limpa o slug
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $slug)));
 
         if (isset($_FILES['cover_image_file']) && $_FILES['cover_image_file']['error'] === UPLOAD_ERR_OK) {
@@ -52,19 +51,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             if ($id) {
                 if ($postModel->update($id, $data)) {
-                    $message = "Post atualizado com sucesso.";
+                    $message = "Post updated successfully.";
                 } else {
-                    $error = "Erro ao atualizar o post.";
+                    $error = "Failed to update post.";
                 }
             } else {
                 if ($postModel->create($data)) {
-                    $message = "Post criado com sucesso.";
+                    $message = "Post created successfully.";
                 } else {
-                    $error = "Erro ao criar o post.";
+                    $error = "Failed to create post.";
                 }
             }
         } catch (PDOException $e) {
-            $error = "Erro no banco de dados (o slug já existe?): " . $e->getMessage();
+            $error = "Database error (does the slug already exist?): " . $e->getMessage();
         }
     }
 }
@@ -75,9 +74,9 @@ ob_start();
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-0">Gerenciador de Posts</h2>
+    <h2 class="mb-0">Posts Management</h2>
     <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#postModal" onclick="resetForm()">
-        <i class="bi bi-plus-lg"></i> Novo Post
+        <i class="bi bi-plus-lg"></i> New Post
     </button>
 </div>
 
@@ -92,15 +91,15 @@ ob_start();
     <?php if (empty($posts)): ?>
         <div class="card shadow-sm border-0">
             <div class="card-body text-center py-5">
-                <h5 class="text-muted mb-3">Nenhum post encontrado</h5>
-                <p class="text-muted mb-0">Você ainda não criou nenhum post no blog.</p>
+                <h5 class="text-muted mb-3">No posts found</h5>
+                <p class="text-muted mb-0">You haven't created any blog posts yet.</p>
             </div>
         </div>
     <?php else: ?>
         <div class="list-group shadow-sm">
             <?php foreach ($posts as $post):
                 $badgeClass = $post['status'] === 'published' ? 'bg-success' : 'bg-secondary';
-                $badgeText = $post['status'] === 'published' ? 'Publicado' : 'Rascunho';
+                $badgeText = $post['status'] === 'published' ? 'Published' : 'Draft';
             ?>
                 <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
                     <div>
@@ -108,13 +107,13 @@ ob_start();
                             <?= htmlspecialchars($post['title']) ?>
                             <span class="badge <?= $badgeClass ?> ms-2"><?= $badgeText ?></span>
                         </h6>
-                        <small class="text-muted">Slug: <?= htmlspecialchars($post['slug']) ?> | Data: <?= date('d/m/Y', strtotime($post['created_at'])) ?></small>
+                        <small class="text-muted">Slug: <?= htmlspecialchars($post['slug']) ?> | Date: <?= date('M d, Y', strtotime($post['created_at'])) ?></small>
                     </div>
                     <div class="d-flex gap-2">
                         <button class="btn btn-sm btn-outline-primary" onclick='editPost(<?= htmlspecialchars(json_encode($post), ENT_QUOTES, "UTF-8") ?>)'>
-                            <i class="bi bi-pencil"></i> Editar
+                            <i class="bi bi-pencil"></i> Edit
                         </button>
-                        <form method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este post?');">
+                        <form method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="id" value="<?= $post['id'] ?>">
                             <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -142,41 +141,41 @@ ob_start();
                     <input type="hidden" name="id" id="post-id">
 
                     <div class="mb-3">
-                        <label class="form-label">Título</label>
+                        <label class="form-label">Title</label>
                         <input type="text" class="form-control" name="title" id="post-title" required onkeyup="generateSlug()">
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Slug (URL amigável)</label>
+                        <label class="form-label">Slug (Friendly URL)</label>
                         <input type="text" class="form-control" name="slug" id="post-slug" required>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Imagem de Capa (Upload)</label>
+                        <label class="form-label">Cover Image (Upload)</label>
                         <input type="file" class="form-control mb-2" name="cover_image_file" id="post-cover-image-file" accept="image/*">
                         <input type="hidden" name="current_cover_image" id="post-current-cover-image">
                         <div id="post-cover-image-preview" class="d-none">
-                            <small class="text-muted d-block mb-1">Imagem atual:</small>
-                            <img src="" alt="Capa" class="img-thumbnail" style="max-height: 100px;">
+                            <small class="text-muted d-block mb-1">Current image:</small>
+                            <img src="" alt="Cover" class="img-thumbnail" style="max-height: 100px;">
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Conteúdo (HTML permitido)</label>
+                        <label class="form-label">Content (HTML allowed)</label>
                         <textarea class="form-control" name="content" id="post-content" rows="10" required></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Status</label>
                         <select class="form-select" name="status" id="post-status">
-                            <option value="draft">Rascunho</option>
-                            <option value="published">Publicado</option>
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
                         </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Salvar Post</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Post</button>
                 </div>
             </form>
         </div>
@@ -185,7 +184,7 @@ ob_start();
 
 <script>
     function generateSlug() {
-        if (document.getElementById('post-id').value !== '') return; // não muda auto se for edição
+        if (document.getElementById('post-id').value !== '') return;
 
         const title = document.getElementById('post-title').value;
         const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
@@ -204,7 +203,7 @@ ob_start();
         document.getElementById('post-cover-image-preview').classList.add('d-none');
         document.getElementById('post-cover-image-preview').querySelector('img').src = '';
 
-        document.getElementById('postModalLabel').innerText = 'Criar Novo Post';
+        document.getElementById('postModalLabel').innerText = 'Create New Post';
     }
 
     function editPost(post) {
@@ -224,14 +223,14 @@ ob_start();
             document.getElementById('post-cover-image-preview').classList.add('d-none');
         }
 
-        document.getElementById('postModalLabel').innerText = 'Editar Post';
+        document.getElementById('postModalLabel').innerText = 'Edit Post';
         var myModal = new bootstrap.Modal(document.getElementById('postModal'));
         myModal.show();
     }
 </script>
 
 <?php
-$title   = 'Gerenciador de Posts';
+$title   = 'Posts Management';
 $content = ob_get_clean();
 require_once __DIR__ . '/../layouts/admin.php';
 ?>

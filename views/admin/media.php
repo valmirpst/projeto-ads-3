@@ -21,12 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             if ($mediaModel->delete($id)) {
-                $message = "Mídia excluída com sucesso.";
+                $message = "Media deleted successfully.";
             } else {
-                $error = "Erro ao excluir do banco de dados.";
+                $error = "Failed to delete from database.";
             }
         } else {
-            $error = "Mídia não encontrada.";
+            $error = "Media not found.";
         }
     } elseif ($action === 'upload') {
         if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
@@ -34,12 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mediaId = handleUpload($_FILES['file'], $uploadDir);
 
             if ($mediaId) {
-                $message = "Arquivo enviado com sucesso.";
+                $message = "File uploaded successfully.";
             } else {
-                $error = "Erro ao enviar o arquivo.";
+                $error = "Failed to upload file.";
             }
         } else {
-            $error = "Nenhum arquivo selecionado ou erro no upload.";
+            $error = "No file selected or upload error.";
         }
     }
 }
@@ -50,9 +50,9 @@ ob_start();
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="mb-0">Gerenciador de Mídia</h2>
+    <h2 class="mb-0">Media Library</h2>
     <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#uploadModal">
-        <i class="bi bi-upload"></i> Fazer Upload
+        <i class="bi bi-upload"></i> Upload
     </button>
 </div>
 
@@ -67,8 +67,8 @@ ob_start();
     <?php if (empty($mediaItems)): ?>
         <div class="card shadow-sm border-0">
             <div class="card-body text-center py-5">
-                <h5 class="text-muted mb-3">Nenhuma mídia encontrada</h5>
-                <p class="text-muted mb-0">Você ainda não enviou nenhum arquivo.</p>
+                <h5 class="text-muted mb-3">No media found</h5>
+                <p class="text-muted mb-0">You haven't uploaded any files yet.</p>
             </div>
         </div>
     <?php else: ?>
@@ -91,13 +91,13 @@ ob_start();
                                 <?= htmlspecialchars($item['file_name']) ?>
                             </small>
                             <div class="mt-auto d-flex justify-content-between">
-                                <a href="<?= $fileUrl ?>" target="_blank" class="btn btn-sm btn-outline-secondary" title="Ver Arquivo">
+                                <a href="<?= $fileUrl ?>" target="_blank" class="btn btn-sm btn-outline-secondary" title="View File">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                <form method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta mídia?');" class="d-inline">
+                                <form method="POST" onsubmit="return confirm('Are you sure you want to delete this media?');" class="d-inline">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
@@ -115,20 +115,20 @@ ob_start();
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Upload de Mídia</h5>
+                <h5 class="modal-title">Upload Media</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" action="" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" name="action" value="upload">
                     <div class="mb-3">
-                        <label for="file" class="form-label">Selecione o arquivo</label>
+                        <label for="file" class="form-label">Select file</label>
                         <input class="form-control" type="file" id="file" name="file" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Fazer Upload</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
                 </div>
             </form>
         </div>
@@ -136,7 +136,7 @@ ob_start();
 </div>
 
 <?php
-$title   = 'Gerenciador de Mídia';
+$title   = 'Media Library';
 $content = ob_get_clean();
 require_once __DIR__ . '/../layouts/admin.php';
 ?>

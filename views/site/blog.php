@@ -11,15 +11,15 @@ ob_start();
     <div class="row mb-5">
         <div class="col-12 text-center">
             <h1 class="display-4 fw-bold">Blog</h1>
-            <p class="lead text-muted">Acompanhe nossas últimas novidades e artigos.</p>
+            <p class="lead text-muted">Read our latest news and articles.</p>
         </div>
     </div>
 
     <?php if (empty($posts)): ?>
         <div class="text-center py-5 text-muted">
             <i class="bi bi-journal-x display-1 d-block mb-3"></i>
-            <p class="fs-5">Nenhum post publicado ainda.</p>
-            <p>Volte em breve para novidades!</p>
+            <p class="fs-5">No posts published yet.</p>
+            <p>Check back soon for updates!</p>
         </div>
     <?php else: ?>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -34,9 +34,9 @@ ob_start();
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title fw-bold mb-3"><?= htmlspecialchars($post['title']) ?></h5>
                             <p class="card-text text-muted small mb-4">
-                                <i class="bi bi-calendar3"></i> <?= date('d M, Y', strtotime($post['created_at'])) ?>
+                                <i class="bi bi-calendar3"></i> <?= date('M d, Y', strtotime($post['created_at'])) ?>
                             </p>
-                            <a href="<?= baseUrl('post?slug=' . urlencode($post['slug'])) ?>" class="btn btn-outline-primary mt-auto stretched-link">Ler mais</a>
+                            <a href="<?= baseUrl('post?slug=' . urlencode($post['slug'])) ?>" class="btn btn-outline-primary mt-auto stretched-link">Read more</a>
                         </div>
                     </div>
                 </div>
@@ -44,6 +44,17 @@ ob_start();
         </div>
     <?php endif; ?>
 </div>
+
+<style>
+    .transition-hover {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .transition-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+</style>
 
 <?php
 $title   = 'Blog';
