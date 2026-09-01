@@ -15,6 +15,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $error = "Failed to delete section.";
         }
+    } elseif ($action === 'move_up') {
+        $id = (int)$_POST['id'];
+        if ($sectionModel->moveUp($id)) {
+            $message = "Section moved up.";
+        } else {
+            $error = "Could not move section up.";
+        }
+    } elseif ($action === 'move_down') {
+        $id = (int)$_POST['id'];
+        if ($sectionModel->moveDown($id)) {
+            $message = "Section moved down.";
+        } else {
+            $error = "Could not move section down.";
+        }
     } elseif ($action === 'save') {
         $id = !empty($_POST['id']) ? (int)$_POST['id'] : null;
         $type = $_POST['type'] ?? '';
@@ -42,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'title' => $_POST['title'] ?? '',
                 'subtitle' => $_POST['subtitle'] ?? '',
                 'backgroundImage' => $backgroundImage,
-                'textColor' => $_POST['textColor'] ?? '#ffffff'
+                'textColor' => $_POST['textColor'] ?? '#000000'
             ];
 
             if (!empty($_POST['buttonText'])) {
@@ -115,11 +129,25 @@ ob_start();
                         <h6 class="mb-1"><?= htmlspecialchars($title) ?> <span class="badge <?= $badgeClass ?> ms-2"><?= $badgeText ?></span></h6>
                         <small class="text-muted">Type: <?= htmlspecialchars($section['type']) ?> | Position: <?= htmlspecialchars($section['position']) ?></small>
                     </div>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 align-items-center">
+                        <form method="POST" class="m-0">
+                            <input type="hidden" name="action" value="move_up">
+                            <input type="hidden" name="id" value="<?= $section['id'] ?>">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary" title="Move Up">
+                                <i class="bi bi-arrow-up"></i>
+                            </button>
+                        </form>
+                        <form method="POST" class="m-0">
+                            <input type="hidden" name="action" value="move_down">
+                            <input type="hidden" name="id" value="<?= $section['id'] ?>">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary" title="Move Down">
+                                <i class="bi bi-arrow-down"></i>
+                            </button>
+                        </form>
                         <button class="btn btn-sm btn-outline-primary" onclick='editSection(<?= htmlspecialchars(json_encode($section), ENT_QUOTES, "UTF-8") ?>)'>
                             <i class="bi bi-pencil"></i> Edit
                         </button>
-                        <form method="POST" onsubmit="return confirm('Are you sure you want to delete this section?');">
+                        <form method="POST" class="m-0" onsubmit="return confirm('Are you sure you want to delete this section?');">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="id" value="<?= $section['id'] ?>">
                             <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -197,7 +225,7 @@ ob_start();
         document.getElementById('hero-current-bg-image').value = '';
         document.getElementById('hero-bg-image-preview').classList.add('d-none');
         document.getElementById('hero-bg-image-preview').querySelector('img').src = '';
-        document.getElementById('hero-text-color').value = '#ffffff';
+        document.getElementById('hero-text-color').value = '#000000';
         document.getElementById('hero-btn-text').value = '';
         document.getElementById('hero-btn-link').value = '';
         document.getElementById('hero-btn-color').value = '#0d6efd';

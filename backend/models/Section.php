@@ -53,4 +53,53 @@ class Section extends Model
         $stmt = $this->db->prepare("DELETE FROM sections WHERE id = :id");
         return $stmt->execute(['id' => $id]);
     }
+
+    public function moveUp(int $id): bool
+    {
+        $atual = $this->getById($id);
+        if (!$atual) return false;
+
+        $stmt = $this->db->prepare("
+            SELECT id, position
+            FROM sections
+            WHERE position < :position
+            ORDER BY position DESC
+            LIMIT 1
+        ");
+        $stmt->execute(['position' => $atual['position']]);
+        $target = $stmt->fetch();
+
+        return $this->trocarPosicoes($atual, $target);
+    }
+
+    public function moveDown(int $id): bool
+    {
+        $atual = $this->getById($id);
+        if (!$atual) return false;
+
+        $stmt = $this->db->prepare("
+            SELECT id, position
+            FROM sections
+            WHERE position > :position
+            ORDER BY position ASC
+            LIMIT 1
+        ");
+        $stmt->execute(['position' => $atual['position']]);
+        $target = $stmt->fetch();
+
+        return $this->trocarPosicoes($atual, $target);
+    }
+
+    private function trocarPosicoes(mixed $atual, mixed $target): bool
+    {
+        if ($target && $atual) {
+            $this->db->prepare("UPDATE sections SET position = :nova_posicao WHERE id = :id")
+                ->execute(['nova_posicao' => $atual['position'], 'id' => $target['id']]);
+
+            $this->db->prepare("UPDATE sections SET position = :nova_posicao WHERE id = :id")
+                ->execute(['nova_posicao' => $target['position'], 'id' => $atual['id']]);
+            return true;
+        }
+        return false;
+    }
 }
