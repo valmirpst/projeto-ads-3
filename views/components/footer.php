@@ -3,21 +3,10 @@
         <div class="row gy-4">
           <div class="col-md-6 text-center text-md-start">
             <h5 class="fw-bold text-dark mb-2"><?php echo htmlspecialchars($globalSettings['site_name'] ?? 'CMS'); ?></h5>
-            <p class="text-muted small mb-3">&copy; <?php echo date('Y'); ?> All rights reserved.</p>
-
-            <?php if (!empty($globalSettings['instagram']) || !empty($globalSettings['facebook']) || !empty($globalSettings['linkedin'])): ?>
-              <div class="d-flex justify-content-center justify-content-md-start gap-3">
-                <?php if (!empty($globalSettings['instagram'])): ?>
-                  <a href="<?php echo htmlspecialchars($globalSettings['instagram']); ?>" target="_blank" class="link-secondary fs-5"><i class="bi bi-instagram"></i></a>
-                <?php endif; ?>
-                <?php if (!empty($globalSettings['facebook'])): ?>
-                  <a href="<?php echo htmlspecialchars($globalSettings['facebook']); ?>" target="_blank" class="link-secondary fs-5"><i class="bi bi-facebook"></i></a>
-                <?php endif; ?>
-                <?php if (!empty($globalSettings['linkedin'])): ?>
-                  <a href="<?php echo htmlspecialchars($globalSettings['linkedin']); ?>" target="_blank" class="link-secondary fs-5"><i class="bi bi-linkedin"></i></a>
-                <?php endif; ?>
-              </div>
+            <?php if (!empty($globalSettings['site_description'])): ?>
+              <p class="text-muted small mb-3"><?php echo htmlspecialchars($globalSettings['site_description']); ?></p>
             <?php endif; ?>
+            <p class="text-muted small mb-0">&copy; <?php echo date('Y'); ?> All rights reserved.</p>
           </div>
 
           <div class="col-md-6 text-center text-md-end">
@@ -32,15 +21,19 @@
               </div>
             <?php endif; ?>
 
-            <ul class="list-inline mb-0 mt-3">
-              <?php if (!empty($is_admin_layout)): ?>
-                <li class="list-inline-item"><a class="link-secondary text-decoration-none" href="<?php echo baseUrl(); ?>">View Site</a></li>
-              <?php else: ?>
-                <li class="list-inline-item"><a class="link-secondary text-decoration-none" href="<?php echo baseUrl(''); ?>">Home</a></li>
-                <li class="list-inline-item px-2"><a class="link-secondary text-decoration-none" href="<?php echo baseUrl('blog'); ?>">Blog</a></li>
-                <li class="list-inline-item ms-2 border-start ps-3"><a class="link-secondary text-decoration-none" href="<?php echo baseUrl('admin'); ?>">Admin Panel</a></li>
-              <?php endif; ?>
-            </ul>
+            <?php if (!empty($globalSettings['instagram']) || !empty($globalSettings['facebook']) || !empty($globalSettings['linkedin'])): ?>
+              <div class="d-flex justify-content-center justify-content-md-end gap-3 mt-3">
+                <?php if (!empty($globalSettings['instagram'])): ?>
+                  <a href="<?php echo htmlspecialchars($globalSettings['instagram']); ?>" target="_blank" class="link-secondary fs-5"><i class="bi bi-instagram"></i></a>
+                <?php endif; ?>
+                <?php if (!empty($globalSettings['facebook'])): ?>
+                  <a href="<?php echo htmlspecialchars($globalSettings['facebook']); ?>" target="_blank" class="link-secondary fs-5"><i class="bi bi-facebook"></i></a>
+                <?php endif; ?>
+                <?php if (!empty($globalSettings['linkedin'])): ?>
+                  <a href="<?php echo htmlspecialchars($globalSettings['linkedin']); ?>" target="_blank" class="link-secondary fs-5"><i class="bi bi-linkedin"></i></a>
+                <?php endif; ?>
+              </div>
+            <?php endif; ?>
           </div>
         </div>
       </div>

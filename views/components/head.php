@@ -10,6 +10,10 @@ $favicon = !empty($globalSettings['favicon_path']) ? baseUrl($globalSettings['fa
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="base-url" content="<?php echo baseUrl(); ?>">
+    <?php if (!empty($globalSettings['site_description'])): ?>
+        <meta name="description" content="<?php echo htmlspecialchars($globalSettings['site_description']); ?>">
+    <?php endif; ?>
+
     <link rel="icon" type="image/png" href="<?php echo $favicon; ?>">
     <title><?php echo isset($title) ? htmlspecialchars($title) . ' | ' . htmlspecialchars($siteName) : htmlspecialchars($siteName); ?></title>
     <!-- Bootstrap CSS -->
