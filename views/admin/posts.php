@@ -16,6 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $error = "Failed to delete post.";
         }
+    } elseif ($action === 'publish') {
+        $id = (int)$_POST['id'];
+        if ($postModel->publish($id)) {
+            $message = "Post published successfully.";
+        } else {
+            $error = "Failed to publish post.";
+        }
     } elseif ($action === 'save') {
         $id = !empty($_POST['id']) ? (int)$_POST['id'] : null;
         $title = $_POST['title'] ?? '';
@@ -107,9 +114,18 @@ ob_start();
                             <?= htmlspecialchars($post['title']) ?>
                             <span class="badge <?= $badgeClass ?> ms-2"><?= $badgeText ?></span>
                         </h6>
-                        <small class="text-muted">Slug: <?= htmlspecialchars($post['slug']) ?> | Date: <?= date('M d, Y', strtotime($post['created_at'])) ?></small>
+                        <small class="text-muted">Slug: <?= htmlspecialchars($post['slug']) ?> | Date: <?= date('M d, Y', strtotime($post['published_at'] ?? $post['created_at'])) ?></small>
                     </div>
                     <div class="d-flex gap-2">
+                        <?php if ($post['status'] === 'draft'): ?>
+                            <form method="POST" onsubmit="return confirm('Publish this post?');">
+                                <input type="hidden" name="action" value="publish">
+                                <input type="hidden" name="id" value="<?= $post['id'] ?>">
+                                <button type="submit" class="btn btn-sm btn-outline-success">
+                                    <i class="bi bi-check2-circle"></i> Publish
+                                </button>
+                            </form>
+                        <?php endif; ?>
                         <button class="btn btn-sm btn-outline-primary" onclick='editPost(<?= htmlspecialchars(json_encode($post), ENT_QUOTES, "UTF-8") ?>)'>
                             <i class="bi bi-pencil"></i> Edit
                         </button>

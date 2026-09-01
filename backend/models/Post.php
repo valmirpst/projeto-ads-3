@@ -6,13 +6,19 @@ class Post extends Model
 {
     public function getPublished(): array
     {
-        $stmt = $this->db->query("SELECT * FROM posts WHERE status = 'published' ORDER BY created_at DESC");
+        $stmt = $this->db->query("
+            SELECT * FROM posts
+            WHERE status = 'published'
+            ORDER BY published_at DESC, created_at DESC");
         return $stmt->fetchAll();
     }
 
     public function getAll(): array
     {
-        $stmt = $this->db->query("SELECT * FROM posts ORDER BY created_at DESC");
+        $stmt = $this->db->query("
+            SELECT * FROM posts
+            ORDER BY published_at DESC, created_at DESC
+        ");
         return $stmt->fetchAll();
     }
 
@@ -26,9 +32,12 @@ class Post extends Model
 
     public function create(array $data): bool
     {
+        $status = $data['status'] ?? 'draft';
+        $published_at = ($status === 'published') ? date('Y-m-d H:i:s') : null;
+
         $stmt = $this->db->prepare("
-            INSERT INTO posts (title, slug, content, cover_image, status)
-            VALUES (:title, :slug, :content, :cover_image, :status)
+            INSERT INTO posts (title, slug, content, cover_image, status, published_at)
+            VALUES (:title, :slug, :content, :cover_image, :status, :published_at)
         ");
 
         return $stmt->execute([
@@ -36,7 +45,8 @@ class Post extends Model
             ':slug' => $data['slug'],
             ':content' => $data['content'],
             ':cover_image' => $data['cover_image'] ?? null,
-            ':status' => $data['status'] ?? 'draft'
+            ':status' => $status,
+            ':published_at' => $published_at
         ]);
     }
 
@@ -44,7 +54,16 @@ class Post extends Model
     {
         $stmt = $this->db->prepare("
             UPDATE posts 
-            SET title = :title, slug = :slug, content = :content, cover_image = :cover_image, status = :status
+            SET title = :title, 
+                slug = :slug, 
+                content = :content, 
+                cover_image = :cover_image, 
+                published_at = CASE
+                    WHEN :status = 'draft' THEN NULL
+                    WHEN published_at IS NULL AND :status = 'published' THEN CURRENT_TIMESTAMP
+                    ELSE published_at
+                END,
+                status = :status
             WHERE id = :id
         ");
 
@@ -61,6 +80,12 @@ class Post extends Model
     public function delete(int $id): bool
     {
         $stmt = $this->db->prepare("DELETE FROM posts WHERE id = :id");
+        return $stmt->execute([':id' => $id]);
+    }
+
+    public function publish(int $id): bool
+    {
+        $stmt = $this->db->prepare("CALL sp_publish_post(:id)");
         return $stmt->execute([':id' => $id]);
     }
 }
