@@ -4,10 +4,6 @@ function buildUrl(path: string): string {
   return base + "/" + path.replace(/^\//, "");
 }
 
-export function url(path = ""): string {
-  return buildUrl(path);
-}
-
 export async function get(
   path: string,
   options?: RequestInit,
@@ -36,7 +32,7 @@ export async function post(path: string, data: Record<string, unknown>) {
   return response.json();
 }
 
-export async function put(path: string, data: any) {
+export async function put(path: string, data: Record<string, unknown>) {
   const response = await fetch(buildUrl(path), {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

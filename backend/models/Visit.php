@@ -19,7 +19,7 @@ class Visit extends Model
     public function getRecentVisits(int $days = 30): array
     {
         $stmt = $this->db->prepare("
-            SELECT session_id, page_url, created_at
+            SELECT id, session_id, page_url, created_at
             FROM visits
             WHERE created_at >= DATE_SUB(NOW(), INTERVAL :days DAY)
             ORDER BY created_at DESC
