@@ -8,15 +8,14 @@ export interface Visit {
 }
 
 async function fetchRecentVisits(): Promise<{ data: Visit[] | null; error: string | null; status: number }> {
-  const res = await get("api/analytics");
-  return { ...res, data: res.data as Visit[] | null };
+  return await get<Visit[]>("api/analytics");
 }
 
 async function trackVisit(
   sessionId: string,
   pageUrl: string,
 ): Promise<{ data: Visit | null; error: string | null; status: number }> {
-  const res = await post("api/analytics", {
+  const res = await post<Visit>("api/analytics", {
     session_id: sessionId,
     page_url: pageUrl,
   });
