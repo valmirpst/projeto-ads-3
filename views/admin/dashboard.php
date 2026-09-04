@@ -4,10 +4,6 @@
     <h2 class="mb-0">Dashboard</h2>
 </div>
 
-<div class="alert alert-primary border-0 shadow-sm mb-4" role="alert">
-    Welcome to your CMS! Choose a task below to get started.
-</div>
-
 <div class="row mb-4">
     <div class="col-12">
         <div class="card shadow-sm border-0">
