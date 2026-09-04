@@ -68,14 +68,25 @@ document.addEventListener("DOMContentLoaded", async () => {
       return acc + numeroDePalavras;
     }, 0);
 
+    // pega a url lá do php
+    const meta = document.querySelector('meta[name="base-url"]') as HTMLMetaElement | null;
+    const baseUrl = meta?.content.replace(/\/$/, "") ?? "";
+
     const recentFormattedPosts = publishedPosts
       .slice(0, 3)
       .map((post) => {
-        const publishData = post.published_at ? new Date(post.published_at).toLocaleDateString("pt-BR") : "Sem data";
-        return `<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0">
-        <span>${post.title}</span>
-        <span class="badge bg-light text-dark rounded-pill">${publishData}</span>
-              </li>`;
+        const publishedDate = post.published_at ? new Date(post.published_at).toLocaleDateString("pt-BR") : "Sem data";
+        const safeTitle = post.title.length > 50 ? post.title.substring(0, 50) + "..." : post.title;
+
+        const postUrl = `${baseUrl}/post?slug=${post.slug}`;
+
+        return `<a href="${postUrl}" target="_blank" class="list-group-item list-group-item-action border mb-2 rounded">
+                <div class="d-flex w-100 justify-content-between align-items-center">
+                    <h6 class="mb-1 fw-bold text-dark">${safeTitle}</h6>
+                    <small class="text-muted">${publishedDate}</small>
+                </div>
+                <small class="text-primary">Visualizar no site &rarr;</small>
+              </a>`;
       })
       .join("");
 
@@ -97,9 +108,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
         
         <h6 class="mt-4 mb-3 text-muted fw-bold">ÚLTIMAS PUBLICAÇÕES</h6>
-        <ul class="list-group list-group-flush">
-            ${recentFormattedPosts || '<li class="list-group-item text-muted px-0">Nenhuma publicação recente.</li>'}
-        </ul>
+        <div class="list-group">
+            ${recentFormattedPosts || '<div class="alert alert-light border text-muted">Nenhuma publicação recente.</div>'}
+        </div>
     `;
   }
 

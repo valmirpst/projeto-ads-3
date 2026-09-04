@@ -14,32 +14,6 @@
     </div>
 </div>
 
-<div class="row g-4">
-    <div class="col-md-6">
-        <div class="card h-100 shadow-sm border-0">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Sections Management</h5>
-                <p class="card-text text-muted">Create and organize the content sections for your website's homepage.</p>
-                <div class="mt-auto">
-                    <a href="<?php echo baseUrl('admin/sections'); ?>" class="btn btn-primary">Manage Sections</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="card h-100 shadow-sm border-0">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Site Settings</h5>
-                <p class="card-text text-muted">Update your site's identity, including name, logo, and social media links.</p>
-                <div class="mt-auto">
-                    <a href="<?php echo baseUrl('admin/settings'); ?>" class="btn btn-outline-secondary">Edit Settings</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script type="module" src="<?php echo baseUrl('assets/js/pages/admin/dashboard.js'); ?>"></script>
 
 <?php
