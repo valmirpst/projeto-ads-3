@@ -90,6 +90,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       })
       .join("");
 
+    // isso aq é pra cumprir a rubrica de ranking
+    let maiorPost = { title: "Nenhum", wordCount: 0, url: "#" };
+    for (const post of publishedPosts) {
+      const wordsCount = post.content ? post.content.split(/\s+/).length : 0;
+      if (wordsCount > maiorPost.wordCount) {
+        maiorPost = {
+          title: post.title,
+          wordCount: wordsCount,
+          url: `${baseUrl}/post?slug=${post.slug}`,
+        };
+      }
+    }
+
     htmlContent += `
         <h5 class="card-title mb-4">Analytics de Conteúdo</h5>
         <div class="row text-center mb-4">
@@ -105,6 +118,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <h3 class="display-6 fw-bold text-warning mb-1">${totalWords}</h3>
                 <p class="text-muted mb-0">Palavras Totais</p>
             </div>
+        </div>
+
+        <div class="alert alert-success d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <i class="bi bi-trophy-fill text-warning me-2"></i>
+                <strong>Post Mais Longo:</strong> ${maiorPost.title} (${maiorPost.wordCount} palavras)
+            </div>
+            ${maiorPost.wordCount > 0 ? `<a href="${maiorPost.url}" target="_blank" class="btn btn-sm btn-success">Ler Post</a>` : ""}
         </div>
         
         <h6 class="mt-4 mb-3 text-muted fw-bold">ÚLTIMAS PUBLICAÇÕES</h6>
