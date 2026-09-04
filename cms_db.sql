@@ -1,6 +1,8 @@
 DROP TRIGGER IF EXISTS trg_sections_positive_position;
 
 DROP PROCEDURE IF EXISTS sp_publish_post;
+DROP PROCEDURE IF EXISTS sp_get_recent_visits;
+
 DROP VIEW IF EXISTS vw_site_settings_full;
 DROP VIEW IF EXISTS vw_sections_analytics;
 
@@ -151,6 +153,14 @@ BEGIN
     UPDATE posts
     SET status = 'published', published_at = CURRENT_TIMESTAMP
     WHERE id = p_post_id AND status = 'draft';
+END//
+
+CREATE PROCEDURE sp_get_recent_visits(IN p_days INT)
+BEGIN
+    SELECT id, session_id, page_url, created_at
+    FROM visits
+    WHERE created_at >= DATE_SUB(NOW(), INTERVAL p_days DAY)
+    ORDER BY created_at DESC;
 END//
 
 DELIMITER ;
